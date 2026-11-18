@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>מאמן חזותי | מנוע רוטורי (הרמס 450) + תקן STE-100</title>
+  <title>מאמן ראיון הדרכה | VGU ובקרת טיסה</title>
   <style>
     :root {
       --bg: #0b1220;
@@ -13,10 +13,8 @@
       --text: #eef3ff;
       --muted: #9eb0d6;
       --accent: #38bdf8;
-      --intake: #3b82f6;
-      --comp: #f59e0b;
-      --power: #ef4444;
-      --exhaust: #64748b;
+      --warn: #f59e0b;
+      --danger: #ef4444;
       --good: #22c55e;
     }
 
@@ -26,7 +24,7 @@
       font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     header {
@@ -35,42 +33,27 @@
       padding: 16px 22px;
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
       justify-content: space-between;
     }
 
-    .brand h1 {
-      margin: 0;
-      font-size: 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .brand p {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
+    .brand h1 { margin: 0; font-size: 1.25rem; }
+    .brand p { margin: 4px 0 0; color: var(--muted); font-size: 0.88rem; }
 
-    .hud-stats {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+    .hud-stats { display: flex; gap: 10px; flex-wrap: wrap; }
     .pill {
       background: rgba(56, 189, 248, 0.12);
       border: 1px solid rgba(56, 189, 248, 0.35);
       color: var(--accent);
       padding: 6px 12px;
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 700;
     }
     .pill.xp {
-      background: rgba(34, 197, 94, 0.12);
-      border-color: rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.14);
+      border-color: rgba(34, 197, 94, 0.45);
       color: var(--good);
     }
 
@@ -92,7 +75,7 @@
       font-size: 0.92rem;
       font-weight: 600;
       white-space: nowrap;
-      transition: 0.18s;
+      transition: 0.15s;
     }
     .tab-btn:hover { border-color: var(--accent); color: var(--text); }
     .tab-btn.active {
@@ -101,24 +84,17 @@
       border-color: var(--accent);
     }
 
-    main {
-      max-width: 1220px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
+    main { max-width: 1240px; margin: 0 auto; padding: 20px; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.2fr 0.8fr;
       gap: 20px;
       align-items: start;
     }
-    @media (max-width: 920px) {
-      .grid-2 { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 940px) { .grid-2 { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--panel);
@@ -127,39 +103,37 @@
       padding: 18px;
       margin-bottom: 16px;
     }
-    .card h2, .card h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 1.08rem;
-    }
+    .card h2, .card h3 { margin-top: 0; margin-bottom: 10px; font-size: 1.08rem; }
 
     canvas {
       width: 100%;
-      max-width: 560px;
       height: auto;
       display: block;
-      margin: 0 auto;
       background: #070d19;
-      border-radius: 14px;
+      border-radius: 12px;
       border: 1px solid var(--border);
     }
 
-    .controls {
+    .controls { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .slider-row {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 14px;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      background: var(--panel-2);
+      padding: 8px 12px;
+      border-radius: 10px;
     }
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    .slider-row span.lbl { min-width: 115px; font-weight: 600; }
+    .slider-row input[type="range"] { flex: 1; accent-color: var(--accent); }
+    .slider-row span.val { min-width: 48px; text-align: left; font-weight: 700; color: var(--accent); }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
     button.btn {
       background: var(--panel-2);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 8px 13px;
+      padding: 9px 14px;
       border-radius: 8px;
       cursor: pointer;
       font-size: 0.86rem;
@@ -167,46 +141,10 @@
       transition: 0.15s;
     }
     button.btn:hover { border-color: var(--accent); }
-    button.btn.primary {
-      background: var(--accent);
-      color: #061224;
-      border-color: var(--accent);
-    }
+    button.btn.primary { background: var(--accent); color: #061224; border-color: var(--accent); }
+    button.btn.warn-active { background: rgba(245, 158, 11, 0.2); border-color: var(--warn); color: #fcd34d; }
+    button.btn.danger-active { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: #fca5a5; }
 
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.88rem;
-    }
-    .slider-row input[type="range"] {
-      flex: 1;
-      accent-color: var(--accent);
-    }
-
-    .legend {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      background: var(--panel-2);
-      padding: 7px 10px;
-      border-radius: 8px;
-    }
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* Mode Switcher: Kid/Intuition vs STE-100 */
     .mode-switch {
       display: inline-flex;
       background: #09101f;
@@ -215,21 +153,19 @@
       padding: 4px;
       gap: 4px;
       margin-bottom: 12px;
+      flex-wrap: wrap;
     }
     .mode-btn {
       border: none;
       background: transparent;
       color: var(--muted);
-      padding: 6px 12px;
+      padding: 7px 12px;
       border-radius: 7px;
       cursor: pointer;
       font-size: 0.83rem;
       font-weight: 700;
     }
-    .mode-btn.active {
-      background: var(--accent);
-      color: #071224;
-    }
+    .mode-btn.active { background: var(--accent); color: #071224; }
 
     .ste-box {
       direction: ltr;
@@ -240,10 +176,21 @@
       border-radius: 10px;
       padding: 12px 14px;
       font-family: "Consolas", "Courier New", monospace;
-      font-size: 0.88rem;
+      font-size: 0.87rem;
       color: #dbeafe;
     }
-    .ste-tag {
+    .speak-box {
+      direction: ltr;
+      text-align: left;
+      background: #0a1f1c;
+      border: 1px solid #1e594f;
+      border-left: 4px solid var(--good);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      color: #d1fae5;
+    }
+    .tag {
       display: inline-block;
       font-size: 0.72rem;
       background: #1e3a8a;
@@ -253,62 +200,18 @@
       margin-bottom: 6px;
       font-weight: 700;
     }
+    .tag.green { background: #14532d; color: #86efac; }
 
-    .chamber-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .chamber-card {
+    .info-box {
       background: var(--panel-2);
-      border: 1px solid var(--border);
+      border-right: 4px solid var(--accent);
       border-radius: 10px;
-      padding: 10px;
-      text-align: center;
+      padding: 12px 14px;
+      margin-top: 10px;
+      font-size: 0.9rem;
     }
-    .chamber-card strong { display: block; font-size: 0.82rem; color: var(--muted); }
-    .chamber-card span { font-size: 0.96rem; font-weight: 800; }
+    .info-box.warn { border-right-color: var(--warn); }
 
-    /* Subsystems Diagram */
-    .sys-map {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .sys-node {
-      background: var(--panel-2);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      cursor: pointer;
-      transition: 0.16s;
-      text-align: center;
-    }
-    .sys-node:hover, .sys-node.active {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      background: #1f3157;
-    }
-    .sys-node .ico { font-size: 1.7rem; display: block; margin-bottom: 6px; }
-    .sys-node .title { font-weight: 700; font-size: 0.94rem; }
-    .sys-node .sub { font-size: 0.78rem; color: var(--muted); }
-
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-      margin-top: 8px;
-    }
-    .compare-table th, .compare-table td {
-      border: 1px solid var(--border);
-      padding: 9px 11px;
-      text-align: right;
-    }
-    .compare-table th { background: var(--panel-2); color: var(--accent); }
-
-    /* Quiz / Faults */
     .quiz-opt {
       display: block;
       width: 100%;
@@ -324,11 +227,11 @@
     }
     .quiz-opt:hover { border-color: var(--accent); }
     .quiz-opt.correct { background: rgba(34, 197, 94, 0.18); border-color: var(--good); }
-    .quiz-opt.wrong { background: rgba(239, 68, 68, 0.18); border-color: var(--power); }
+    .quiz-opt.wrong { background: rgba(239, 68, 68, 0.18); border-color: var(--danger); }
 
     .feedback-box {
       margin-top: 12px;
-      padding: 12px;
+      padding: 14px;
       border-radius: 10px;
       background: #0d1a30;
       border: 1px solid var(--border);
@@ -344,11 +247,20 @@
       margin-bottom: 10px;
       border-right: 4px solid var(--accent);
     }
-    .t-badge {
-      font-weight: 800;
-      color: var(--accent);
-      min-width: 90px;
-      font-size: 0.88rem;
+    .t-badge { font-weight: 800; color: var(--accent); min-width: 95px; font-size: 0.88rem; }
+
+    .surface-readout {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .readout-item {
+      background: var(--panel-2);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      border: 1px solid var(--border);
     }
   </style>
 </head>
@@ -356,256 +268,205 @@
 
 <header>
   <div class="brand">
-    <h1>🛩️ מאמן חזותי: מנוע רוטורי (הרמס 450) + תקן STE-100</h1>
-    <p>פרוטוטייפ לימודי: עקרונות מנוע ונקל, מערכות תומכות, סימולטור תקלות וכתיבה תעופתית</p>
+    <h1>מאמן ראיון הדרכה | VGU (ג'ירו אנכי) ובקרת טיסה</h1>
+    <p>מבנה מותאם לימין-לשמאל: סימולציות חיות, הסבר אינטואיטיבי, תקן STE-100 ואימון אנגלית לראיון</p>
   </div>
   <div class="hud-stats">
-    <span class="pill">פלטפורמה: Wankel Rotary</span>
-    <span class="pill xp" id="xpBadge">XP: 0 / 500</span>
+    <span class="pill">שני נושאי הראיון</span>
+    <span class="pill xp" id="xpBadge">XP: 0 / 600</span>
   </div>
 </header>
 
 <nav class="tabs">
-  <button class="tab-btn active" onclick="switchTab('lab', this)">1. המעבדה החיה (אנימציה)</button>
-  <button class="tab-btn" onclick="switchTab('systems', this)">2. חלקים, מערכות ו-450 מול 900</button>
-  <button class="tab-btn" onclick="switchTab('faults', this)">3. סימולטור תקלות (משחוק)</button>
-  <button class="tab-btn" onclick="switchTab('lesson', this)">4. שלד שיעור של 20 דקות</button>
+  <button class="tab-btn active" onclick="switchTab('vgu', this)">1. ג'ירו אנכי — מעבדה חיה (VGU)</button>
+  <button class="tab-btn" onclick="switchTab('fc', this)">2. בקרת טיסה וזנב V</button>
+  <button class="tab-btn" onclick="switchTab('qa', this)">3. אנגלית ושאלות קשות מהראיון</button>
+  <button class="tab-btn" onclick="switchTab('lesson', this)">4. שלד שיעור ל-20 דקות</button>
 </nav>
 
 <main>
-  <!-- TAB 1: LIVE SIMULATOR -->
-  <section id="lab" class="tab-panel active">
+  <!-- TAB 1: VGU SIMULATOR -->
+  <section id="vgu" class="tab-panel active">
     <div class="grid-2">
       <div class="card">
-        <h2>סימולציית מנוע ונקל בזמן אמת (3 תאים במקביל)</h2>
-        <canvas id="wankelCanvas" width="520" height="440"></canvas>
+        <h2>הדמיית ג'ירו אנכי: בחוץ מול בפנים</h2>
+        <canvas id="vguCanvas" width="620" height="330"></canvas>
 
         <div class="controls">
+          <div class="slider-row">
+            <span class="lbl">זווית גלגול (Roll):</span>
+            <input type="range" id="vguRoll" min="-40" max="40" value="0" />
+            <span class="val" id="vguRollVal">0°</span>
+          </div>
+          <div class="slider-row">
+            <span class="lbl">זווית עלרוד (Pitch):</span>
+            <input type="range" id="vguPitch" min="-25" max="25" value="0" />
+            <span class="val" id="vguPitchVal">0°</span>
+          </div>
           <div class="btn-row">
-            <button class="btn primary" id="playBtn" onclick="togglePlay()">⏸️ עצור / הפעל</button>
-            <button class="btn" onclick="jumpToPhase('intake')">🔵 יניקה</button>
-            <button class="btn" onclick="jumpToPhase('comp')">🟡 דחיסה</button>
-            <button class="btn" onclick="jumpToPhase('power')">🔴 הצתה ועבודה</button>
-            <button class="btn" onclick="jumpToPhase('exhaust')">⚪ פליטה</button>
-          </div>
-
-          <div class="slider-row">
-            <span>מהירות אנימציה:</span>
-            <input type="range" id="speedSlider" min="0" max="4" step="0.2" value="1.2" />
-            <span id="speedLabel">1.2x</span>
-          </div>
-
-          <div class="slider-row">
-            <span>גרירה ידנית (זווית רוטור):</span>
-            <input type="range" id="angleSlider" min="0" max="360" step="1" value="0" />
-            <span id="angleLabel">0°</span>
+            <button class="btn" id="turnBtn" onclick="toggleTurn()">🔄 הדמיית פנייה מתמשכת / תאוצה</button>
+            <button class="btn" onclick="resetVgu()">איפוס לאופק ישר</button>
           </div>
         </div>
 
-        <div class="legend">
-          <div class="legend-item"><span class="dot" style="background:var(--intake)"></span> יניקה (אוויר + דלק נכנסים)</div>
-          <div class="legend-item"><span class="dot" style="background:var(--comp)"></span> דחיסה (הנפח קטן והלחץ עולה)</div>
-          <div class="legend-item"><span class="dot" style="background:var(--power)"></span> הצתה ועבודה (ניצוץ דוחף רוטור)</div>
-          <div class="legend-item"><span class="dot" style="background:var(--exhaust)"></span> פליטה (גזים שרופים יוצאים)</div>
+        <div class="info-box warn" id="vguStatusBox">
+          מצב מערכת זקיפה: <strong>פעילה (מיישרת בעדינות לכבידה)</strong> — המטוס בטיסה ישרה או בהטיה קטנה.
         </div>
       </div>
 
       <div>
         <div class="card">
-          <h3>מצב 3 התאים כרגע (תא אחד = פעימה אחת)</h3>
-          <p style="font-size:0.87rem; color:var(--muted); margin-top:0;">
-            בניגוד למנוע בוכנה רגיל שבו בוכנה אחת עולה ויורדת, כאן <strong>שלוש צלעות הרוטור</strong> יוצרות 3 תאים נפרדים שעובדים <strong>בו-זמנית</strong>!
-          </p>
-          <div class="chamber-grid">
-            <div class="chamber-card"><strong>תא A</strong><span id="ch0">-</span></div>
-            <div class="chamber-card"><strong>תא B</strong><span id="ch1">-</span></div>
-            <div class="chamber-card"><strong>תא C</strong><span id="ch2">-</span></div>
-          </div>
-          <div style="margin-top:12px; padding:10px; background:var(--panel-2); border-radius:10px; font-size:0.86rem;">
-            🔄 <strong>יחס גלגלי השיניים (3:1):</strong> על כל <strong>סיבוב אחד</strong> של הרוטור המשולש, גל הארכובה האקסצנטרי (שמחובר לפרופלור) מסתובב <strong id="shaftTurns">3.00</strong> סיבובים!
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>הסבר התהליך — בחר סגנון קריאה</h3>
+          <h3>איך הג'ירו האנכי עובד? (בחרי סגנון קריאה)</h3>
           <div class="mode-switch">
-            <button class="mode-btn active" onclick="setTextMode('lab', 'kid', this)">🧒 הסבר של ילד (עברית)</button>
-            <button class="mode-btn" onclick="setTextMode('lab', 'ste', this)">✈️ תקן STE-100 (אנגלית)</button>
+            <button class="mode-btn active" onclick="setMode('vgu', 'kid', this)">הסבר של ילד (עברית)</button>
+            <button class="mode-btn" onclick="setMode('vgu', 'ste', this)">תקן STE-100</button>
+            <button class="mode-btn" onclick="setMode('vgu', 'speak', this)">מה להגיד באנגלית בראיון</button>
           </div>
 
-          <div id="lab-kid">
-            <p><strong>תדמיין ספינר משולש שמסתובב בתוך קופסה בצורת בוטן:</strong></p>
-            <ul style="padding-right:18px; margin:0; font-size:0.9rem;">
-              <li><strong>שלב 1 — יניקה:</strong> הרוטור עובר ליד פתח היניקה, התא גדל ושואב פנימה תערובת אוויר+דלק (כמו מזרק שנמשך אחורה).</li>
-              <li><strong>שלב 2 — דחיסה:</strong> התא נסחף ימינה ונמעך מול קיר "הבוטן". הנפח נהיה קטן מאוד והתערובת מתחממת.</li>
-              <li><strong>שלב 3 — הצתה ועבודה:</strong> <strong>שני מצתים</strong> יורים ניצוץ! הפיצוץ דוחף את הצלע בכוח ומסובב את הרוטור.</li>
-              <li><strong>שלב 4 — פליטה:</strong> התא ממשיך למטה-שמאלה ונפתח לפתח הפליטה, ודוחף החוצה את הגזים השרופים.</li>
-            </ul>
-            <p style="margin-top:10px; font-size:0.85rem; color:var(--accent);">
-              💡 <strong>למה הוא כל כך חלק?</strong> אין שסתומים, אין גל זיזים, ואין בוכנות שטסות למעלה-למטה ועוצרות בבת אחת. לכן יש המון כוח ביחס למשקל ומעט רעידות למצלמה של הכטמ"מ!
-            </p>
-          </div>
-
-          <div id="lab-ste" style="display:none;">
-            <div class="ste-box">
-              <span class="ste-tag">ASD-STE100 COMPLIANT SAMPLE</span>
-              <p><strong>1. INTAKE:</strong> THE ROTOR TURNS CLOCKWISE. CHAMBER VOLUME INCREASES AT THE INTAKE PORT. AIR AND FUEL ENTER THE CHAMBER.</p>
-              <p><strong>2. COMPRESSION:</strong> THE ROTOR MOVES THE GASES TO THE SPARK PLUG SIDE. CHAMBER VOLUME DECREASES. PRESSURE AND TEMPERATURE INCREASE.</p>
-              <p><strong>3. IGNITION AND POWER:</strong> THE TWO SPARK PLUGS IGNITE THE MIXTURE. EXPANDING GASES PUSH THE ROTOR FLANK AND TURN THE ECCENTRIC SHAFT.</p>
-              <p><strong>4. EXHAUST:</strong> THE ROTOR OPENS THE EXHAUST PORT. BURNED GASES EXIT THE HOUSING.</p>
+          <div id="vgu-kid">
+            <p><strong>הבעיה:</strong> בתוך ענן או בלילה, המטוס לא יודע איפה השמיים ואיפה הקרקע.</p>
+            <p><strong>הפתרון (הסביבון):</strong> בתוך קופסת ה-VGU יש גלגל מתכת כבד שמסתובב מהר מאוד. בגלל חוק פיזיקלי שנקרא <strong>קשיחות במרחב</strong>, הסביבון מתעקש להישאר עומד ישר כל הזמן — גם כשהמטוס עצמו מתגלגל ימינה או מרים אף.</p>
+            <p><strong>איך מודדים?</strong> הקופסה החיצונית מוברגת למטוס ולכן זזה יחד איתו. חיישנים (פוטנציומטרים או רזולברים) מודדים את הזווית בין הקופסה שנטתה לבין הסביבון שנשאר ישר — וככה יודעים את זווית ה<strong>גלגול</strong> וה<strong>עלרוד</strong>!</p>
+            <div class="info-box">
+              <strong>הסוד של מדריכים — מערכת זקיפה וניתוק זקיפה:</strong><br>
+              בגלל חיכוך וסיבוב כדור הארץ, הסביבון נוטה לזוז לאט הצידה (Drift). לכן יש לו מטוטלת קטנה שמחזירה אותו לאנך האמיתי. <strong>אבל בפנייה או בהאצה</strong>, כוח צנטריפוגלי מרגיש כמו כוח הכבידה ומנסה להטעות את הג'ירו! לכן מעל זווית הטיה מסוימת, המערכת <strong>מנתקת זמנית את היישור</strong> (Erection Cut-Out) עד שהפנייה נגמרת.
             </div>
-            <p style="font-size:0.82rem; color:var(--muted); margin-top:8px;">
-              שים לב לכללי ה-STE-100: משפטים קצרים, פעיל בלבד (לא סביל), מילה אחת לכל משמעות (למשל רק TURN ולא ROTATE/SPIN לסירוגין), ורעיון אחד במשפט.
-            </p>
+          </div>
+
+          <div id="vgu-ste" style="display:none;">
+            <div class="ste-box">
+              <span class="tag">ASD-STE100</span>
+              <p>THE VERTICAL GYRO UNIT (VGU) MEASURES AIRCRAFT PITCH AND ROLL ANGLES.</p>
+              <p>A SPINNING ROTOR KEEPS ITS VERTICAL POSITION IN SPACE. WHEN THE AIRCRAFT TILTS, THE UNIT MEASURES THE ANGLE BETWEEN THE HOUSING AND THE ROTOR.</p>
+              <p>THE ERECTION SYSTEM CORRECTS SLOW GYRO DRIFT. DURING A TURN OR ACCELERATION, THE SYSTEM CUTS OUT ERECTION TO PREVENT FALSE VERTICAL ERRORS.</p>
+            </div>
+          </div>
+
+          <div id="vgu-speak" style="display:none;">
+            <div class="speak-box">
+              <span class="tag green">PRESENTER SCRIPT</span>
+              <p>"Think of the VGU as the aircraft's inner ear. Its job is to answer one critical question: where is down? It gives us continuous Pitch and Roll data."</p>
+              <p>"Inside, a fast-spinning rotor resists tilting. When the UAV banks, the outer case moves with the aircraft while the gyro stays upright, and sensors read the angle difference."</p>
+              <p>"One key detail: during a sustained turn, centrifugal force tricks the leveling pendulum. So the VGU uses Erection Cut-Out above a threshold bank angle to stay accurate."</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TAB 2: PARTS, SUBSYSTEMS & 450 vs 900 -->
-  <section id="systems" class="tab-panel">
-    <div class="card">
-      <h2>ארכיטקטורת מערכת ההנעה (לחץ על תת-מערכת כדי לחקור)</h2>
-      <div class="sys-map">
-        <div class="sys-node active" onclick="selectSubsystem('core', this)">
-          <span class="ico">⚙️</span>
-          <div class="title">ליבת הרוטור ואטמי קודקוד</div>
-          <div class="sub">Rotor & Apex Seals</div>
+  <!-- TAB 2: FLIGHT CONTROL & V-TAIL -->
+  <section id="fc" class="tab-panel">
+    <div class="grid-2">
+      <div class="card">
+        <h2>מערכת בקרת טיסה: מבט מאחור על זנב V וחוג סגור</h2>
+        <canvas id="fcCanvas" width="620" height="390"></canvas>
+
+        <div class="controls">
+          <div class="slider-row">
+            <span class="lbl">פקודת עלרוד (Pitch):</span>
+            <input type="range" id="fcPitch" min="-100" max="100" value="0" />
+            <span class="val" id="fcPitchVal">0%</span>
+          </div>
+          <div class="slider-row">
+            <span class="lbl">פקודת גלגול (Roll):</span>
+            <input type="range" id="fcRoll" min="-100" max="100" value="0" />
+            <span class="val" id="fcRollVal">0%</span>
+          </div>
+          <div class="slider-row">
+            <span class="lbl">פקודת סבסוב (Yaw):</span>
+            <input type="range" id="fcYaw" min="-100" max="100" value="0" />
+            <span class="val" id="fcYawVal">0%</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn" id="faultBtn" onclick="toggleSensorFault()">⚠️ הדמה תקלת VGU ראשי (מעבר לגיבוי)</button>
+            <button class="btn" onclick="resetFc()">מרכז הגאים</button>
+          </div>
         </div>
-        <div class="sys-node" onclick="selectSubsystem('fuel', this)">
-          <span class="ico">⛽</span>
-          <div class="title">מערכת דלק והזרקה</div>
-          <div class="sub">Fuel & Injection</div>
-        </div>
-        <div class="sys-node" onclick="selectSubsystem('cooling', this)">
-          <span class="ico">❄️</span>
-          <div class="title">קירור כפול (נוזל + שמן)</div>
-          <div class="sub">Dual Cooling</div>
-        </div>
-        <div class="sys-node" onclick="selectSubsystem('oil', this)">
-          <span class="ico">🛢️</span>
-          <div class="title">שימון מדוד (Total-Loss)</div>
-          <div class="sub">Oil Metering</div>
-        </div>
-        <div class="sys-node" onclick="selectSubsystem('ignition', this)">
-          <span class="ico">⚡</span>
-          <div class="title">הצתה כפולה ואלטרנטור</div>
-          <div class="sub">Dual Ignition & ~1.6kW</div>
-        </div>
+
+        <div class="surface-readout" id="surfaceReadout"></div>
       </div>
 
-      <div id="subsystemDetail" style="background:var(--panel-2); border:1px solid var(--border); border-radius:12px; padding:16px;">
-        <!-- Filled by JS -->
-      </div>
-    </div>
+      <div>
+        <div class="card">
+          <h3>איך בקרת הטיסה מחברת הכול יחד?</h3>
+          <div class="mode-switch">
+            <button class="mode-btn active" onclick="setMode('fc', 'kid', this)">הסבר של ילד (עברית)</button>
+            <button class="mode-btn" onclick="setMode('fc', 'ste', this)">תקן STE-100</button>
+            <button class="mode-btn" onclick="setMode('fc', 'speak', this)">מה להגיד באנגלית בראיון</button>
+          </div>
 
-    <div class="card">
-      <h2>שאלת המפתח: הרמס 450 מול הרמס 900 — למה המנועים שונים לגמרי?</h2>
-      <p style="font-size:0.9rem; color:var(--muted);">
-        לגמרי צדקת — אלו שתי משפחות מנועים שונות. הנה ההשוואה הפשוטה שתגרום לך להיראות סופר מקצועי בראיון:
-      </p>
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>מאפיין</th>
-            <th>הרמס 450 (משפחת Wankel Rotary)</th>
-            <th>הרמס 900 (בוכנה 4-פעימות / דיזל כבד)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>סוג מנוע (דוגמה פומבית)</strong></td>
-            <td>מנוע רוטורי ונקל (כגון UEL AR80-1010 / R902)</td>
-            <td>בוכנה 4-צילינדר מוגדש (Rotax 914) או טורבו-דיזל (TAE-125)</td>
-          </tr>
-          <tr>
-            <td><strong>סוג דלק</strong></td>
-            <td>בנזין תעופתי / אוטומטי (AVGAS / MOGAS)</td>
-            <td>דלק סילוני כבד (Jet A-1) בדיזל / בנזין ב-Rotax</td>
-          </tr>
-          <tr>
-            <td><strong>למה בחרו בו?</strong></td>
-            <td>קל מאוד (~40 ק"ג ל-50–70 כ"ס), זעיר, מעט רעידות</td>
-            <td>חסכוני יותר בגובה רב, שהייה ארוכה, לוגיסטיקה אחידה עם Jet A-1</td>
-          </tr>
-          <tr>
-            <td><strong>אתגר הנדסי עיקרי</strong></td>
-            <td>שחיקת אטמי קודקוד (Apex Seals), חום גבוה בצד הבעירה</td>
-            <td>משקל גדול יותר ומורכבות של שסתומים, טורבו ותמסורת הפחתה</td>
-          </tr>
-        </tbody>
-      </table>
+          <div id="fc-kid">
+            <p><strong>חוג סגור (Closed Loop) — כמו נהיגה ברכב:</strong></p>
+            <p>אתה מסובב הגה, העיניים רואות אם הרכב סוטה, והידיים מתקנות מיד. בכטמ"מ זה עובד אותו דבר אוטומטית:</p>
+            <ul style="padding-right:18px; margin:6px 0;">
+              <li><strong>החיישנים (העיניים):</strong> הג'ירו האנכי (זווית), ג'ירו קצבים (מהירות תנועה), חיישני אוויר (מהירות וגובה) וניווט.</li>
+              <li><strong>מחשב הטיסה (המוח):</strong> משווה איפה הכלי נמצא מול מה שהטייס או המסלול ביקשו, ומחשב תיקון עשרות פעמים בשנייה.</li>
+              <li><strong>הסרוואים (השרירים):</strong> מנועים קטנים שמזיזים את המשטחים על הכנף והזנב.</li>
+            </ul>
+            <div class="info-box">
+              <strong>הקסם של זנב V (משטחים משולבים):</strong><br>
+              במקום הגה גובה והגה כיוון נפרדים, שני משטחי הזנב עושים עבודה כפולה:<br>
+              • כששניהם עולים <strong>יחד</strong> ← האף עולה (עלרוד).<br>
+              • כשאחד עולה והשני יורד (<strong>מנוגדים</strong>) ← הכלי מסתובב ימינה או שמאלה (סבסוב).
+            </div>
+          </div>
+
+          <div id="fc-ste" style="display:none;">
+            <div class="ste-box">
+              <span class="tag">ASD-STE100</span>
+              <p>THE FLIGHT CONTROL SYSTEM OPERATES AS A CLOSED LOOP.</p>
+              <p>SENSORS SEND ATTITUDE AND AIR DATA TO THE FLIGHT CONTROL COMPUTER. THE COMPUTER CALCULATES CORRECTIONS AND SENDS COMMANDS TO THE SERVO ACTUATORS.</p>
+              <p>ON A V-TAIL, SYMMETRICAL DEFLECTION CONTROLS PITCH. DIFFERENTIAL DEFLECTION CONTROLS YAW. REDUNDANT CHANNELS MAINTAIN CONTROL IF ONE SENSOR FAILS.</p>
+            </div>
+          </div>
+
+          <div id="fc-speak" style="display:none;">
+            <div class="speak-box">
+              <span class="tag green">PRESENTER SCRIPT</span>
+              <p>"A UAV flight control system is a continuous closed loop: Sense, Compute, and Act."</p>
+              <p>"Sensors like the VGU tell the Flight Control Computer the current attitude. The computer compares that to the desired path and drives the servos."</p>
+              <p>"Notice the V-tail mixer: moving both surfaces together gives Pitch, while moving them in opposite directions gives Yaw. And to keep the aircraft safe, critical sensors and computers have redundancy."</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- TAB 3: FAULT SIMULATOR -->
-  <section id="faults" class="tab-panel">
+  <!-- TAB 3: INTERVIEW Q&A SIMULATOR -->
+  <section id="qa" class="tab-panel">
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <h2 style="margin:0;">סימולטור תקלות וחשיבה של מדריך סימולטור</h2>
-        <span class="pill" id="qCounter">שאלה 1 מתוך 5</span>
+        <h2 style="margin:0;">סימולטור שאלות קשות מהראיון (מענה לשאלות + אנגלית)</h2>
+        <span class="pill" id="qCounter">שאלה 1 מתוך 6</span>
       </div>
       <p style="color:var(--muted); font-size:0.9rem;">
-        כמדריך סימולטור, לא מספיק לדעת שמות של חלקים — צריך להבין <strong>מה קורה באוויר כשמשהו משתבש</strong>. בחר את התשובה הנכונה כדי לצבור XP:
+        המראיין כתב שייבחן גם <strong>מענה לשאלות</strong> וגם <strong>רמת אנגלית</strong>. התאמני כאן על 6 השאלות שהכי אוהבים לשאול בהדרכות אוויוניקה ובקרת טיסה:
       </p>
-
-      <div id="quizContainer" style="margin-top:14px;"></div>
+      <div id="quizContainer"></div>
       <div id="quizFeedback" class="feedback-box"></div>
       <div style="margin-top:14px;">
-        <button class="btn primary" id="nextQBtn" onclick="nextQuestion()" style="display:none;">לשאלה הבאה ⬅️</button>
+        <button class="btn primary" id="nextQBtn" onclick="nextQ()" style="display:none;">לשאלה הבאה</button>
       </div>
     </div>
   </section>
 
-  <!-- TAB 4: LESSON BLUEPRINT -->
+  <!-- TAB 4: 20-MIN LESSON BLUEPRINT -->
   <section id="lesson" class="tab-panel">
     <div class="card">
-      <h2>התבנית להדרכה שלך בראיון (15–30 דקות)</h2>
-      <p style="color:var(--muted); font-size:0.9rem;">
-        ברגע שנקבל הערב את המצגות מהמראיין, ניצוק לתוך המבנה הזה את התוכן המדויק (אם זה יהיה מנוע 450, מנוע 900, או מערכת אחרת):
-      </p>
-
-      <div class="timeline-step">
-        <div class="t-badge">00:00–02:30</div>
-        <div>
-          <strong>פתיחה ו"הלמה?" (The Hook):</strong> לא פותחים ברשימת ברגים! מתחילים בבעיה: <em>"אנחנו צריכים מנוע קטן, קל וללא רעידות שיחזיק כטמ"מ שעות באוויר בלי להרעיד את המצלמה — וזו הסיבה לבחירה הטכנולוגית."</em>
-        </div>
+      <h2>תבנית שיעור מנצחת ל-20 דקות (בחרי נושא להתאמה)</h2>
+      <div class="mode-switch">
+        <button class="mode-btn active" onclick="renderBlueprint('vgu', this)">תבנית לשיעור על ג'ירו אנכי (VGU)</button>
+        <button class="mode-btn" onclick="renderBlueprint('fc', this)">תבנית לשיעור על בקרת טיסה</button>
       </div>
-
-      <div class="timeline-step">
-        <div class="t-badge">02:30–06:00</div>
-        <div>
-          <strong>תמונה גדולה (Big Picture):</strong> איפה המנוע יושב (Pusher בזנב — כדי שהאף יהיה פנוי למטע"ד), מה נכנס אליו (אוויר, דלק, פקודות) ומה יוצא ממנו (דחף + חשמל למערכות).
-        </div>
-      </div>
-
-      <div class="timeline-step">
-        <div class="t-badge">06:00–13:00</div>
-        <div>
-          <strong>איך זה עובד (אנימציה + 4 פעימות + תתי-מערכות):</strong> מעבר נקי על המחזור בעזרת תרשימים, והסבר קצר על קירור, שימון והצתה כפולה (יתירות).
-        </div>
-      </div>
-
-      <div class="timeline-step">
-        <div class="t-badge">13:00–18:00</div>
-        <div>
-          <strong>סיפור מהשטח / תרחיש תקלה (הערך המוסף שלך כמדריך):</strong> הצגת חיווי תקלה אחד (למשל עליית חום מנוע או נפילת אלטרנטור), וניתוח סיבה-תוצאה מול "החניכים".
-        </div>
-      </div>
-
-      <div class="timeline-step">
-        <div class="t-badge">18:00–20:00</div>
-        <div>
-          <strong>סיכום ובדיקת הבנה:</strong> שאילת 2 שאלות קצרות את המראיינים ("החניכים") — מראיינים בתחום ההדרכה מתים על הרגלי הוראה אקטיביים!
-        </div>
-      </div>
+      <div id="blueprintBox"></div>
     </div>
   </section>
 </main>
 
 <script>
-  // ---------------- TAB NAVIGATION ----------------
+  // ---------------- TAB & MODE HELPERS ----------------
   function switchTab(id, btn) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -613,468 +474,605 @@
     btn.classList.add('active');
   }
 
-  function setTextMode(prefix, mode, btn) {
-    const parent = btn.parentElement;
-    parent.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  function setMode(prefix, mode, btn) {
+    btn.parentElement.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById(prefix + '-kid').style.display = mode === 'kid' ? 'block' : 'none';
-    document.getElementById(prefix + '-ste').style.display = mode === 'ste' ? 'block' : 'none';
+    ['kid', 'ste', 'speak'].forEach(m => {
+      document.getElementById(prefix + '-' + m).style.display = (m === mode) ? 'block' : 'none';
+    });
   }
 
-  // ---------------- WANKEL KINEMATICS & CANVAS ----------------
-  const canvas = document.getElementById('wankelCanvas');
-  const ctx = canvas.getContext('2d');
-  const cx = canvas.width / 2 + 10;
-  const cy = canvas.height / 2;
+  // ---------------- TAB 1: VGU CANVAS SIMULATION ----------------
+  const vguCanvas = document.getElementById('vguCanvas');
+  const vctx = vguCanvas.getContext('2d');
+  let vRoll = 0, vPitch = 0, turnActive = false, rotorSpinPhase = 0;
 
-  // Epitrochoid geometry: R = generating radius, e = eccentricity
-  const R = 112;
-  const e = 16;
+  const vguRollEl = document.getElementById('vguRoll');
+  const vguPitchEl = document.getElementById('vguPitch');
+  vguRollEl.addEventListener('input', () => { vRoll = +vguRollEl.value; updateVguStatus(); });
+  vguPitchEl.addEventListener('input', () => { vPitch = +vguPitchEl.value; updateVguStatus(); });
 
-  let alpha = 0; // Rotor angle in radians
-  let playing = true;
-  let speed = 1.2;
-
-  const speedSlider = document.getElementById('speedSlider');
-  const angleSlider = document.getElementById('angleSlider');
-  const speedLabel = document.getElementById('speedLabel');
-  const angleLabel = document.getElementById('angleLabel');
-
-  speedSlider.addEventListener('input', () => {
-    speed = parseFloat(speedSlider.value);
-    speedLabel.textContent = speed.toFixed(1) + 'x';
-  });
-
-  angleSlider.addEventListener('input', () => {
-    playing = false;
-    document.getElementById('playBtn').textContent = '▶️ הפעל';
-    alpha = (parseFloat(angleSlider.value) * Math.PI) / 180;
-    drawFrame();
-  });
-
-  function togglePlay() {
-    playing = !playing;
-    document.getElementById('playBtn').textContent = playing ? '⏸️ עצור / הפעל' : '▶️ הפעל';
+  function toggleTurn() {
+    turnActive = !turnActive;
+    const btn = document.getElementById('turnBtn');
+    btn.classList.toggle('warn-active', turnActive);
+    if (turnActive && Math.abs(vRoll) < 12) {
+      vRoll = 22;
+      vguRollEl.value = 22;
+    }
+    updateVguStatus();
   }
 
-  // Jump Chamber A (k=0) to a specific stroke phase
-  function jumpToPhase(phase) {
-    playing = false;
-    document.getElementById('playBtn').textContent = '▶️ הפעל';
-    // Chamber 0 midpoint canvas angle = alpha - PI/6
-    // Intake: ~225deg (5*PI/4) -> alpha = 5PI/4 + PI/6 = 17PI/12 (255deg)
-    // Comp:   ~315deg (7*PI/4) -> alpha = 345deg
-    // Power:  ~25deg  -> alpha = 55deg
-    // Exhaust:~135deg -> alpha = 165deg
-    const targets = { intake: 255, comp: 345, power: 40, exhaust: 165 };
-    alpha = (targets[phase] * Math.PI) / 180;
-    drawFrame();
+  function resetVgu() {
+    vRoll = 0; vPitch = 0; turnActive = false;
+    vguRollEl.value = 0; vguPitchEl.value = 0;
+    document.getElementById('turnBtn').classList.remove('warn-active');
+    updateVguStatus();
   }
 
-  function housingPoint(t) {
-    const x = e * Math.cos(3 * t) + R * Math.cos(t);
-    const y = e * Math.sin(3 * t) + R * Math.sin(t);
-    // Rotate +90 deg so waists are Left/Right, bulges Top/Bottom
-    return { x: cx + y, y: cy - x };
-  }
-
-  function rotorApex(a, k) {
-    const t = a + (2 * Math.PI * k) / 3;
-    const x = e * Math.cos(3 * a) + R * Math.cos(t);
-    const y = e * Math.sin(3 * a) + R * Math.sin(t);
-    return { x: cx + y, y: cy - x, t };
-  }
-
-  function rotorCenter(a) {
-    const x = e * Math.cos(3 * a);
-    const y = e * Math.sin(3 * a);
-    return { x: cx + y, y: cy - x };
-  }
-
-  function normAngle(rad) {
-    const twoPi = 2 * Math.PI;
-    return ((rad % twoPi) + twoPi) % twoPi;
-  }
-
-  function getStrokeInfo(canvasMidAngle) {
-    const deg = (normAngle(canvasMidAngle) * 180) / Math.PI;
-    if (deg >= 180 && deg < 270) {
-      return { name: 'יניקה', color: 'rgba(59, 130, 246, 0.42)', textColor: '#60a5fa' };
-    } else if (deg >= 270 && deg < 360) {
-      return { name: 'דחיסה', color: 'rgba(245, 158, 11, 0.44)', textColor: '#fbbf24' };
-    } else if (deg >= 0 && deg < 90) {
-      return { name: deg < 28 ? 'הצתה! 🔥' : 'עבודה', color: 'rgba(239, 68, 68, 0.52)', textColor: '#f87171' };
+  function updateVguStatus() {
+    document.getElementById('vguRollVal').textContent = vRoll + '°';
+    document.getElementById('vguPitchVal').textContent = vPitch + '°';
+    const cutOut = turnActive || Math.abs(vRoll) > 7;
+    const box = document.getElementById('vguStatusBox');
+    if (cutOut) {
+      box.innerHTML = 'מצב מערכת זקיפה: <strong style="color:#fbbf24;">ניתוק זקיפה פעיל (Erection Cut-Out)!</strong> — בפנייה/הטיה מעל 7°, המערכת מנתקת את תיקון הכבידה כדי שכוח הצנטריפוגה לא ישקר לג\'ירו.';
     } else {
-      return { name: 'פליטה', color: 'rgba(100, 116, 139, 0.45)', textColor: '#cbd5e1' };
+      box.innerHTML = 'מצב מערכת זקיפה: <strong style="color:#22c55e;">זקיפה פעילה</strong> — המטוס ישר יחסית, והמערכת מתקנת בעדינות סחיפה (Drift) לכיוון כדור הארץ.';
     }
   }
 
-  function drawFrame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  function drawVgu() {
+    vctx.clearRect(0, 0, vguCanvas.width, vguCanvas.height);
 
-    // 1. Outer Casing Block
-    ctx.save();
-    ctx.fillStyle = '#18243c';
-    ctx.strokeStyle = '#3b5280';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.roundRect(cx - 155, cy - 168, 310, 336, 36);
-    ctx.fill();
-    ctx.stroke();
-    ctx.restore();
+    // Titles
+    vctx.fillStyle = '#9eb0d6';
+    vctx.font = 'bold 13px sans-serif';
+    vctx.textAlign = 'center';
+    vctx.fillText('אופק מלאכותי (מה המפעיל/מחשב רואה)', 155, 24);
+    vctx.fillText('בתוך קופסת ה-VGU (הקופסה נוטה, הסביבון ישר)', 455, 24);
 
-    // 2. Intake & Exhaust Ports on Left
-    // Intake port (Upper-Left)
-    ctx.fillStyle = '#1d4ed8';
-    ctx.fillRect(cx - 178, cy - 102, 76, 32);
-    ctx.fillStyle = '#dbeafe';
-    ctx.font = 'bold 12px sans-serif';
-    ctx.fillText('יניקה ➡️', cx - 172, cy - 82);
+    // --- LEFT: ARTIFICIAL HORIZON BALL ---
+    const hx = 155, hy = 175, hr = 112;
+    vctx.save();
+    vctx.beginPath();
+    vctx.arc(hx, hy, hr, 0, Math.PI * 2);
+    vctx.clip();
 
-    // Exhaust port (Lower-Left)
-    ctx.fillStyle = '#475569';
-    ctx.fillRect(cx - 178, cy + 70, 76, 32);
-    ctx.fillStyle = '#f1f5f9';
-    ctx.fillText('⬅️ פליטה', cx - 172, cy + 90);
+    vctx.translate(hx, hy);
+    vctx.rotate((-vRoll * Math.PI) / 180);
+    const pitchPx = vPitch * 2.2;
 
-    // 3. Draw Housing Cavity Background
-    ctx.save();
-    ctx.beginPath();
-    const steps = 180;
-    for (let i = 0; i <= steps; i++) {
-      const t = (i / steps) * 2 * Math.PI;
-      const p = housingPoint(t);
-      if (i === 0) ctx.moveTo(p.x, p.y);
-      else ctx.lineTo(p.x, p.y);
-    }
-    ctx.closePath();
-    ctx.fillStyle = '#090f1d';
-    ctx.fill();
-    ctx.restore();
+    // Sky
+    vctx.fillStyle = '#0284c7';
+    vctx.fillRect(-200, -250 + pitchPx, 400, 250);
+    // Ground
+    vctx.fillStyle = '#78350f';
+    vctx.fillRect(-200, pitchPx, 400, 250);
+    // Horizon line
+    vctx.strokeStyle = '#ffffff';
+    vctx.lineWidth = 3;
+    vctx.beginPath();
+    vctx.moveTo(-200, pitchPx);
+    vctx.lineTo(200, pitchPx);
+    vctx.stroke();
 
-    // 4. Compute Apexes & Rotor Center
-    const ap = [rotorApex(alpha, 0), rotorApex(alpha, 1), rotorApex(alpha, 2)];
-    const rc = rotorCenter(alpha);
-
-    // 5. Fill the 3 Chambers accurately between housing arc and curved flank
-    let igniteFlash = false;
-    for (let k = 0; k < 3; k++) {
-      const nextK = (k + 1) % 3;
-      const tStart = ap[k].t;
-      const tEnd = tStart + (2 * Math.PI) / 3;
-      const midCanvasAngle = alpha + (2 * Math.PI * k) / 3 - Math.PI / 6;
-      const info = getStrokeInfo(midCanvasAngle);
-
-      const degMid = (normAngle(midCanvasAngle) * 180) / Math.PI;
-      if (degMid >= 0 && degMid < 20) igniteFlash = true;
-
-      // Update HUD chamber text
-      const chEl = document.getElementById('ch' + k);
-      chEl.textContent = info.name;
-      chEl.style.color = info.textColor;
-
-      // Control point for curved rotor flank
-      const mx = (ap[k].x + ap[nextK].x) / 2;
-      const my = (ap[k].y + ap[nextK].y) / 2;
-      const tMid = tStart + Math.PI / 3;
-      // Outward normal in canvas coords: (sin(tMid), -cos(tMid))
-      const nx = Math.sin(tMid);
-      const ny = -Math.cos(tMid);
-      const ctrlX = mx + nx * 22;
-      const ctrlY = my + ny * 22;
-
-      ctx.beginPath();
-      const arcSteps = 28;
-      for (let s = 0; s <= arcSteps; s++) {
-        const tt = tStart + (s / arcSteps) * ((2 * Math.PI) / 3);
-        const hp = housingPoint(tt);
-        if (s === 0) ctx.moveTo(hp.x, hp.y);
-        else ctx.lineTo(hp.x, hp.y);
-      }
-      ctx.quadraticCurveTo(ctrlX, ctrlY, ap[k].x, ap[k].y);
-      ctx.closePath();
-      ctx.fillStyle = info.color;
-      ctx.fill();
-    }
-
-    // 6. Housing Epitrochoid Wall Stroke
-    ctx.beginPath();
-    for (let i = 0; i <= steps; i++) {
-      const t = (i / steps) * 2 * Math.PI;
-      const p = housingPoint(t);
-      if (i === 0) ctx.moveTo(p.x, p.y);
-      else ctx.lineTo(p.x, p.y);
-    }
-    ctx.closePath();
-    ctx.strokeStyle = '#60a5fa';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    // 7. Dual Spark Plugs on Right Waist
-    [cy - 22, cy + 22].forEach((py, idx) => {
-      ctx.fillStyle = '#cbd5e1';
-      ctx.fillRect(cx + R - e + 2, py - 5, 34, 10);
-      ctx.fillStyle = igniteFlash ? '#fef08a' : '#475569';
-      ctx.beginPath();
-      ctx.arc(cx + R - e + 2, py, igniteFlash ? 9 : 4, 0, Math.PI * 2);
-      ctx.fill();
+    // Pitch ladder lines
+    vctx.strokeStyle = 'rgba(255,255,255,0.75)';
+    vctx.lineWidth = 1.5;
+    [-20, -10, 10, 20].forEach(deg => {
+      const ly = pitchPx - deg * 2.2;
+      vctx.beginPath();
+      vctx.moveTo(-28, ly);
+      vctx.lineTo(28, ly);
+      vctx.stroke();
     });
-    ctx.fillStyle = '#fde047';
-    ctx.font = 'bold 12px sans-serif';
-    ctx.fillText('⚡ הצתה כפולה', cx + R - e + 40, cy + 4);
+    vctx.restore();
 
-    // 8. Draw Rotor Body
-    ctx.beginPath();
-    for (let k = 0; k < 3; k++) {
-      const nextK = (k + 1) % 3;
-      const mx = (ap[k].x + ap[nextK].x) / 2;
-      const my = (ap[k].y + ap[nextK].y) / 2;
-      const tMid = ap[k].t + Math.PI / 3;
-      const ctrlX = mx + Math.sin(tMid) * 22;
-      const ctrlY = my - Math.cos(tMid) * 22;
-      if (k === 0) ctx.moveTo(ap[k].x, ap[k].y);
-      ctx.quadraticCurveTo(ctrlX, ctrlY, ap[nextK].x, ap[nextK].y);
-    }
-    ctx.closePath();
-    ctx.fillStyle = '#334155';
-    ctx.fill();
-    ctx.strokeStyle = '#94a3b8';
-    ctx.lineWidth = 2.5;
-    ctx.stroke();
+    // Horizon ring + Fixed aircraft symbol
+    vctx.beginPath();
+    vctx.arc(hx, hy, hr, 0, Math.PI * 2);
+    vctx.strokeStyle = '#475569';
+    vctx.lineWidth = 5;
+    vctx.stroke();
 
-    // Labels A, B, C on Rotor Flanks
-    for (let k = 0; k < 3; k++) {
-      const tMid = ap[k].t + Math.PI / 3;
-      const lx = rc.x + Math.sin(tMid) * 44;
-      const ly = rc.y - Math.cos(tMid) * 44;
-      ctx.fillStyle = '#f8fafc';
-      ctx.font = 'bold 13px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(['A', 'B', 'C'][k], lx, ly);
-    }
-    ctx.textAlign = 'start';
-    ctx.textBaseline = 'alphabetic';
+    vctx.strokeStyle = '#facc15';
+    vctx.lineWidth = 4;
+    vctx.beginPath();
+    vctx.moveTo(hx - 38, hy);
+    vctx.lineTo(hx - 12, hy);
+    vctx.lineTo(hx, hy + 8);
+    vctx.lineTo(hx + 12, hy);
+    vctx.lineTo(hx + 38, hy);
+    vctx.stroke();
 
-    // 9. Apex Seals (Yellow tips)
-    ap.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
-      ctx.fillStyle = '#facc15';
-      ctx.fill();
-    });
+    // --- RIGHT: INSIDE VGU ---
+    const gx = 455, gy = 175;
+    const rollRad = (vRoll * Math.PI) / 180;
 
-    // 10. Eccentric Shaft & Internal Gear
-    ctx.beginPath();
-    ctx.arc(rc.x, rc.y, 26, 0, Math.PI * 2);
-    ctx.fillStyle = '#1e293b';
-    ctx.fill();
-    ctx.strokeStyle = '#38bdf8';
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    // Outer casing tilts with aircraft
+    vctx.save();
+    vctx.translate(gx, gy);
+    vctx.rotate(rollRad);
+    vctx.fillStyle = '#16233d';
+    vctx.strokeStyle = '#38bdf8';
+    vctx.lineWidth = 3;
+    vctx.beginPath();
+    vctx.roundRect(-95, -95, 190, 190, 22);
+    vctx.fill();
+    vctx.stroke();
 
-    // Fixed housing center shaft (spins 3x faster!)
-    ctx.beginPath();
-    ctx.arc(cx, cy, 14, 0, Math.PI * 2);
-    ctx.fillStyle = '#38bdf8';
-    ctx.fill();
+    // Housing top arrow ("Aircraft Up")
+    vctx.fillStyle = '#38bdf8';
+    vctx.font = 'bold 11px sans-serif';
+    vctx.fillText('קופסה (זזה עם המטוס)', 0, -76);
+    vctx.restore();
 
-    // Shaft rotation indicator line (3 * alpha)
-    const shaftAngle = 3 * alpha;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(cx + Math.sin(shaftAngle) * 14, cy - Math.cos(shaftAngle) * 14);
-    ctx.strokeStyle = '#061224';
-    ctx.lineWidth = 3;
-    ctx.stroke();
+    // Inner Gimbal & Spinning Gyro Rotor stay VERTICAL (Rigidity in Space!)
+    vctx.save();
+    vctx.translate(gx, gy);
+    // Vertical reference axis
+    vctx.setLineDash([4, 4]);
+    vctx.strokeStyle = 'rgba(34, 197, 94, 0.55)';
+    vctx.beginPath();
+    vctx.moveTo(0, -110);
+    vctx.lineTo(0, 110);
+    vctx.stroke();
+    vctx.setLineDash([]);
 
-    // Update UI sliders/metrics
-    const deg = Math.round((normAngle(alpha) * 180) / Math.PI);
-    angleSlider.value = deg;
-    angleLabel.textContent = deg + '°';
-    document.getElementById('shaftTurns').textContent = ((alpha / (2 * Math.PI)) * 3).toFixed(2);
-  }
+    // Outer gimbal ring
+    vctx.strokeStyle = '#94a3b8';
+    vctx.lineWidth = 3;
+    vctx.beginPath();
+    vctx.arc(0, 0, 56, 0, Math.PI * 2);
+    vctx.stroke();
 
-  let lastTime = 0;
-  function animate(ts) {
-    if (!lastTime) lastTime = ts;
-    const dt = (ts - lastTime) / 1000;
-    lastTime = ts;
+    // Gyro Rotor flywheel (horizontal heavy disk spinning around vertical axis)
+    vctx.fillStyle = '#f59e0b';
+    vctx.strokeStyle = '#fef08a';
+    vctx.lineWidth = 2;
+    vctx.beginPath();
+    vctx.roundRect(-42, -11 + vPitch * 0.4, 84, 22, 8);
+    vctx.fill();
+    vctx.stroke();
 
-    if (playing) {
-      alpha += dt * speed * 0.9;
-      if (alpha > Math.PI * 200) alpha = 0;
-      drawFrame();
-    }
-    requestAnimationFrame(animate);
-  }
-  drawFrame();
-  requestAnimationFrame(animate);
+    // Spinning highlight stripe
+    const sx = Math.sin(rotorSpinPhase) * 34;
+    vctx.fillStyle = '#78350f';
+    vctx.fillRect(sx - 5, -9 + vPitch * 0.4, 10, 18);
 
-  // ---------------- SUBSYSTEMS DATA ----------------
-  const subsystems = {
-    core: {
-      title: '⚙️ ליבת הרוטור ואטמי קודקוד (Rotor & Apex Seals)',
-      kid: 'תדמיין מגבים של שמשת רכב שמורכבים על שלוש הפינות של המשולש. התפקיד שלהם הוא לאטום הרמטית את הרווח שבין הרוטור לקיר — כדי שהפיצוץ של תא אחד לא יברח לתא השכן!',
-      why: 'אם אטם קודקוד נשחק או נתקע (בגלל פיח או מחסור בשמן), מאבדים דחיסה, הכוח יורד והמנוע מתקשה לעבוד.',
-      ste: 'THE THREE APEX SEALS TOUCH THE HOUSING WALL. THEY SEPARATE THE THREE CHAMBERS AND PREVENT GAS LEAKAGE.'
-    },
-    fuel: {
-      title: '⛽ מערכת דלק והזרקה (Fuel & Injection)',
-      kid: 'כמו בקבוק תרסיס שמערבב דלק ואוויר לרסס דק ואחיד לפני הכניסה למנוע. מחשב הניהול מחשב בדיוק כמה דלק להזריק לפי הגובה והטמפרטורה.',
-      why: 'תערובת ענייה מדי (יותר מדי אוויר, מעט מדי דלק) גורמת לחום מנוע קיצוני; תערובת עשירה מדי מבזבזת דלק ומקצרת זמן שהייה באוויר.',
-      ste: 'THE FUEL INJECTOR DELIVERS ATOMIZED FUEL INTO THE INTAKE AIR. THE CONTROL UNIT ADJUSTS FUEL FLOW FOR ALTITUDE.'
-    },
-    cooling: {
-      title: '❄️ קירור כפול (נוזל קירור + קירור שמן/אוויר לרוטור)',
-      kid: 'במנוע ונקל צד אחד תמיד לוהט (צד ההצתה) וצד אחד תמיד קר (צד היניקה). לכן מזרימים נוזל קירור מסביב לקירות המנוע, ומזרימים אוויר/שמן בתוך הרוטור עצמו כדי שלא יתעוות מהחום.',
-      why: 'בטיפוס לגובה או ביום חם, אם חום נוזל הקירור מטפס לקו האדום — חייבים להוריד עומס (מצערת) לפני שהאטמים ייפגעו.',
-      ste: 'COOLANT CIRCULATES THROUGH THE HOUSING JACKET TO REMOVE HEAT. INTERNAL OIL OR AIR FLOW COOLS THE ROTOR.'
-    },
-    oil: {
-      title: '🛢️ שימון מדוד (Total-Loss Oil Metering)',
-      kid: 'בניגוד לרכב שבו השמן רק מסתובב במעגל סגור, כאן מזריקים טיפות קטנות ומדויקות של שמן ישירות לתוך תאי הבערה כדי לשמן את אטמי הקודקוד — והן נשרפות יחד עם הדלק.',
-      why: 'בטיסות ארוכות של כטמ"מ (הרבה שעות באוויר), חייבים לדעת שצריכת השמן תקינה. בלי שימון, האטמים מתחממים ונשחקים תוך דקות.',
-      ste: 'THE OIL METERING PUMP INJECTS A SMALL AMOUNT OF OIL INTO THE CHAMBER. THIS OIL LUBRICATES THE APEX SEALS.'
-    },
-    ignition: {
-      title: '⚡ הצתה כפולה ואלטרנטור (~1.6 קילו-וואט)',
-      kid: 'שני דברים קריטיים על גב המנוע: (1) שני מצתים במקום אחד — גם ליתירות בטיחותית וגם כי התא ארוך וצר וצריך הצתה מלאה. (2) אלטרנטור חזק שמייצר חשמל למטע"ד (מצלמות), למחשב הטיסה ולסרוואים.',
-      why: 'אם האלטרנטור נופל בטיסה, המטוס עובר לסוללות גיבוי — והטייס/מפעיל חייב לכבות מערכות זוללות חשמל (Load Shedding) כדי לחזור לנחיתה בשלום!',
-      ste: 'TWO SPARK PLUGS IGNITE THE FUEL-AIR MIXTURE FOR SAFETY AND COMPLETE COMBUSTION. THE ENGINE DRIVES AN ALTERNATOR TO SUPPLY ELECTRICAL POWER.'
-    }
-  };
+    // Vertical axle
+    vctx.strokeStyle = '#e2e8f0';
+    vctx.lineWidth = 4;
+    vctx.beginPath();
+    vctx.moveTo(0, -45);
+    vctx.lineTo(0, 45);
+    vctx.stroke();
 
-  let currentSubKey = 'core';
-  let subMode = 'kid';
+    // Erection Cut-Out badge or active badge
+    const cutOut = turnActive || Math.abs(vRoll) > 7;
+    if (cutOut) {
+      vctx.fillStyle = 'rgba(245, 158, 11, 0.22)';
+      vctx.strokeStyle = '#f59e0b';
+      vctx.lineWidth = 1.5;
+      vctx.beginPath();
+      vctx.roundRect(-78, 108, 156, 26, 6);
+      vctx.fill();
+      vctx.stroke();
+      vctx.fillStyle = '#fcd34d';
+      vctx.font = 'bold 11px sans-serif';
+      vctx.fillText('CUT-OUT: תיקון זקיפה מנותק', 0, 125);
 
-  function selectSubsystem(key, el) {
-    document.querySelectorAll('.sys-node').forEach(n => n.classList.remove('active'));
-    el.classList.add('active');
-    currentSubKey = key;
-    renderSubsystem();
-  }
-
-  function toggleSubMode(mode) {
-    subMode = mode;
-    renderSubsystem();
-  }
-
-  function renderSubsystem() {
-    const d = subsystems[currentSubKey];
-    const box = document.getElementById('subsystemDetail');
-    box.innerHTML = `
-      <h3 style="margin-top:0;">${d.title}</h3>
-      <div class="mode-switch">
-        <button class="mode-btn ${subMode === 'kid' ? 'active' : ''}" onclick="toggleSubMode('kid')">🧒 הסבר של ילד + משמעות תפעולית</button>
-        <button class="mode-btn ${subMode === 'ste' ? 'active' : ''}" onclick="toggleSubMode('ste')">✈️ תקן STE-100</button>
-      </div>
-      ${subMode === 'kid'
-        ? `<p style="margin:6px 0;"><strong>איך זה עובד:</strong> ${d.kid}</p>
-           <p style="margin:6px 0; color:#fbbf24;"><strong>מה חשוב למדריך סימולטור:</strong> ${d.why}</p>`
-        : `<div class="ste-box"><span class="ste-tag">ASD-STE100</span><p style="margin:0;">${d.ste}</p></div>`
+      if (turnActive) {
+        // Show false centrifugal pull arrow
+        vctx.strokeStyle = '#ef4444';
+        vctx.lineWidth = 2;
+        vctx.beginPath();
+        vctx.moveTo(0, 45);
+        vctx.lineTo(35, 78);
+        vctx.stroke();
+        vctx.fillStyle = '#fca5a5';
+        vctx.font = '11px sans-serif';
+        vctx.fillText('כוח צנטריפוגלי מטעה', 55, 88);
       }
+    } else {
+      vctx.fillStyle = 'rgba(34, 197, 94, 0.2)';
+      vctx.strokeStyle = '#22c55e';
+      vctx.lineWidth = 1.5;
+      vctx.beginPath();
+      vctx.roundRect(-74, 108, 148, 26, 6);
+      vctx.fill();
+      vctx.stroke();
+      vctx.fillStyle = '#86efac';
+      vctx.font = 'bold 11px sans-serif';
+      vctx.fillText('זקיפה פעילה (ננעל לכבידה)', 0, 125);
+    }
+    vctx.restore();
+  }
+
+  // ---------------- TAB 2: FLIGHT CONTROL & V-TAIL ----------------
+  const fcCanvas = document.getElementById('fcCanvas');
+  const fctx = fcCanvas.getContext('2d');
+  let fPitch = 0, fRoll = 0, fYaw = 0, sensorFault = false, pulsePhase = 0;
+
+  ['fcPitch', 'fcRoll', 'fcYaw'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      fPitch = +document.getElementById('fcPitch').value;
+      fRoll = +document.getElementById('fcRoll').value;
+      fYaw = +document.getElementById('fcYaw').value;
+      document.getElementById('fcPitchVal').textContent = fPitch + '%';
+      document.getElementById('fcRollVal').textContent = fRoll + '%';
+      document.getElementById('fcYawVal').textContent = fYaw + '%';
+      updateReadout();
+    });
+  });
+
+  function toggleSensorFault() {
+    sensorFault = !sensorFault;
+    document.getElementById('faultBtn').classList.toggle('danger-active', sensorFault);
+  }
+
+  function resetFc() {
+    fPitch = 0; fRoll = 0; fYaw = 0;
+    ['fcPitch', 'fcRoll', 'fcYaw'].forEach(id => document.getElementById(id).value = 0);
+    ['fcPitchVal', 'fcRollVal', 'fcYawVal'].forEach(id => document.getElementById(id).textContent = '0%');
+    updateReadout();
+  }
+
+  function clamp(v, mn, mx) { return Math.max(mn, Math.min(mx, v)); }
+
+  function updateReadout() {
+    // Aerodynamics (Rear View):
+    // Pitch Up (+) -> Both V-tail surfaces UP (+)
+    // Yaw Right (+) -> Left V-tail UP (+), Right V-tail DOWN (-)
+    // Roll Right (+) -> Left Aileron DOWN (-), Right Aileron UP (+)
+    const leftV = clamp(fPitch + fYaw, -100, 100);
+    const rightV = clamp(fPitch - fYaw, -100, 100);
+    const leftAil = -fRoll;
+    const rightAil = fRoll;
+
+    const fmt = v => v > 5 ? `למעלה (${Math.round(v)}%)` : v < -5 ? `למטה (${Math.round(-v)}%)` : 'ניטרלי';
+
+    document.getElementById('surfaceReadout').innerHTML = `
+      <div class="readout-item"><strong>משטח זנב V שמאל:</strong> <span style="color:#38bdf8">${fmt(leftV)}</span></div>
+      <div class="readout-item"><strong>משטח זנב V ימין:</strong> <span style="color:#38bdf8">${fmt(rightV)}</span></div>
+      <div class="readout-item"><strong>מאזנת שמאל:</strong> <span style="color:#fbbf24">${fmt(leftAil)}</span></div>
+      <div class="readout-item"><strong>מאזנת ימין:</strong> <span style="color:#fbbf24">${fmt(rightAil)}</span></div>
     `;
   }
-  renderSubsystem();
+  updateReadout();
 
-  // ---------------- GAMIFIED QUIZ / FAULT SIMULATOR ----------------
-  const questions = [
+  function drawFc() {
+    fctx.clearRect(0, 0, fcCanvas.width, fcCanvas.height);
+
+    // --- TOP HALF: REAR VIEW OF UAV + SURFACES ---
+    const ux = 310, uy = 115;
+    fctx.fillStyle = '#9eb0d6';
+    fctx.font = 'bold 13px sans-serif';
+    fctx.textAlign = 'center';
+    fctx.fillText('מבט מאחורי הכטמ"מ: תזוזת משטחי היגוי וזנב V בזמן אמת', ux, 22);
+
+    const leftV = clamp(fPitch + fYaw, -100, 100);
+    const rightV = clamp(fPitch - fYaw, -100, 100);
+    const leftAil = -fRoll;
+    const rightAil = fRoll;
+
+    // Wings
+    fctx.strokeStyle = '#94a3b8';
+    fctx.lineWidth = 8;
+    fctx.beginPath();
+    fctx.moveTo(ux - 180, uy);
+    fctx.lineTo(ux + 180, uy);
+    fctx.stroke();
+
+    // Ailerons (outer wings)
+    function drawFlapIndicator(x, y, val, label) {
+      const dy = -(val / 100) * 20; // positive = UP
+      fctx.strokeStyle = Math.abs(val) > 5 ? '#f59e0b' : '#475569';
+      fctx.lineWidth = 6;
+      fctx.beginPath();
+      fctx.moveTo(x - 28, y);
+      fctx.lineTo(x + 28, y);
+      fctx.stroke();
+
+      if (Math.abs(val) > 5) {
+        fctx.fillStyle = '#fbbf24';
+        fctx.beginPath();
+        fctx.arc(x, y + dy, 6, 0, Math.PI * 2);
+        fctx.fill();
+        fctx.strokeStyle = '#fbbf24';
+        fctx.lineWidth = 2;
+        fctx.beginPath();
+        fctx.moveTo(x, y);
+        fctx.lineTo(x, y + dy);
+        fctx.stroke();
+      }
+      fctx.fillStyle = '#cbd5e1';
+      fctx.font = '11px sans-serif';
+      fctx.fillText(label, x, y + 28);
+    }
+
+    drawFlapIndicator(ux - 135, uy, leftAil, 'מאזנת שמאל');
+    drawFlapIndicator(ux + 135, uy, rightAil, 'מאזנת ימין');
+
+    // V-Tail Fins
+    fctx.strokeStyle = '#60a5fa';
+    fctx.lineWidth = 7;
+    fctx.beginPath();
+    fctx.moveTo(ux, uy + 10);
+    fctx.lineTo(ux - 70, uy - 52);
+    fctx.moveTo(ux, uy + 10);
+    fctx.lineTo(ux + 70, uy - 52);
+    fctx.stroke();
+
+    // V-Tail Ruddervator Indicators
+    function drawVIndicator(x, y, val, side) {
+      const dy = -(val / 100) * 18;
+      if (Math.abs(val) > 5) {
+        fctx.strokeStyle = '#38bdf8';
+        fctx.lineWidth = 3;
+        fctx.beginPath();
+        fctx.moveTo(x, y);
+        fctx.lineTo(x, y + dy);
+        fctx.stroke();
+        fctx.fillStyle = '#38bdf8';
+        fctx.beginPath();
+        fctx.arc(x, y + dy, 6, 0, Math.PI * 2);
+        fctx.fill();
+      }
+      fctx.fillStyle = '#93c5fd';
+      fctx.font = 'bold 11px sans-serif';
+      fctx.fillText(side, x + (side.includes('שמאל') ? -38 : 38), y - 24);
+    }
+    drawVIndicator(ux - 52, uy - 38, leftV, 'זנב שמאל');
+    drawVIndicator(ux + 52, uy - 38, rightV, 'זנב ימין');
+
+    // Fuselage Center
+    fctx.fillStyle = '#334155';
+    fctx.strokeStyle = '#cbd5e1';
+    fctx.lineWidth = 2;
+    fctx.beginPath();
+    fctx.arc(ux, uy + 8, 18, 0, Math.PI * 2);
+    fctx.fill();
+    fctx.stroke();
+
+    // --- BOTTOM HALF: CLOSED-LOOP ARCHITECTURE ---
+    const ly = 248;
+    fctx.fillStyle = '#9eb0d6';
+    fctx.font = 'bold 13px sans-serif';
+    fctx.fillText('החוג הסגור (Closed-Loop Control) + יתירות חיישנים', 310, 206);
+
+    const nodes = [
+      { x: 525, y: ly, w: 120, h: 46, t: 'פקודה (מפעיל/מסלול)', c: '#1e3a8a' },
+      { x: 380, y: ly, w: 125, h: 46, t: 'מחשב טיסה (FCC)', c: '#0369a1' },
+      { x: 225, y: ly, w: 125, h: 46, t: 'סרוואים והגאים', c: '#0f766e' },
+      { x: 85,  y: ly, w: 115, h: 46, t: 'תנועת הכטמ"מ', c: '#334155' }
+    ];
+
+    // Forward arrows (Right to Left for RTL flow!)
+    fctx.strokeStyle = '#38bdf8';
+    fctx.lineWidth = 2.5;
+    for (let i = 0; i < nodes.length - 1; i++) {
+      fctx.beginPath();
+      fctx.moveTo(nodes[i].x - nodes[i].w / 2, ly);
+      fctx.lineTo(nodes[i + 1].x + nodes[i + 1].w / 2, ly);
+      fctx.stroke();
+    }
+
+    // Feedback Loop (Sensors at bottom)
+    const sy = 335;
+    fctx.strokeStyle = sensorFault ? '#f59e0b' : '#22c55e';
+    fctx.lineWidth = 2.5;
+    fctx.beginPath();
+    fctx.moveTo(85, ly + 23);
+    fctx.lineTo(85, sy);
+    fctx.lineTo(380, sy);
+    fctx.lineTo(380, ly + 23);
+    fctx.stroke();
+
+    // Animated pulse dot along loop
+    const p = pulsePhase % 1;
+    let px, py;
+    if (p < 0.5) {
+      // Forward top line (525 -> 85)
+      px = 525 - (p / 0.5) * (525 - 85);
+      py = ly;
+    } else {
+      // Feedback bottom line (85 -> 380)
+      px = 85 + ((p - 0.5) / 0.5) * (380 - 85);
+      py = sy;
+    }
+    fctx.fillStyle = '#fde047';
+    fctx.beginPath();
+    fctx.arc(px, py, 5, 0, Math.PI * 2);
+    fctx.fill();
+
+    // Draw forward boxes
+    nodes.forEach(n => {
+      fctx.fillStyle = n.c;
+      fctx.strokeStyle = '#60a5fa';
+      fctx.lineWidth = 1.5;
+      fctx.beginPath();
+      fctx.roundRect(n.x - n.w / 2, n.y - n.h / 2, n.w, n.h, 8);
+      fctx.fill();
+      fctx.stroke();
+      fctx.fillStyle = '#f8fafc';
+      fctx.font = 'bold 11px sans-serif';
+      fctx.fillText(n.t, n.x, n.y + 4);
+    });
+
+    // Draw Sensor Boxes (Primary VGU + Backup VGU)
+    fctx.fillStyle = sensorFault ? '#7f1d1d' : '#14532d';
+    fctx.strokeStyle = sensorFault ? '#ef4444' : '#22c55e';
+    fctx.beginPath();
+    fctx.roundRect(145, sy - 22, 175, 44, 8);
+    fctx.fill();
+    fctx.stroke();
+    fctx.fillStyle = '#ffffff';
+    fctx.font = 'bold 11px sans-serif';
+    fctx.fillText(
+      sensorFault ? 'VGU ראשי: תקלה! עובר לגיבוי 2' : 'חיישנים: VGU ראשי + ג\'ירו קצבים',
+      232, sy + 4
+    );
+  }
+
+  // Main Animation Loop
+  let lastT = 0;
+  function loop(ts) {
+    if (!lastT) lastT = ts;
+    const dt = (ts - lastT) / 1000;
+    lastT = ts;
+    rotorSpinPhase += dt * 12;
+    pulsePhase += dt * 0.45;
+    drawVgu();
+    drawFc();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  // ---------------- TAB 3: INTERVIEW Q&A SIMULATOR ----------------
+  const qaList = [
     {
-      q: 'במהלך סימולציה, המפעיל מדווח שטמפרטורת נוזל הקירור מטפסת במהירות במהלך טיפוס ממושך. מה ההסבר הפיזיקלי ומה הפעולה המיידית?',
+      q: 'חניך שואל באמצע השיעור: "למה צריך ניתוק זקיפה (Erection Cut-Out) בג\'ירו האנכי?" מה התשובה המדויקת?',
       opts: [
-        'העומס בטיפוס מייצר עודף חום באזור הבעירה; מורידים מצערת/זווית טיפוס כדי להגדיל זרימת אוויר ולהקטין יצירת חום.',
-        'יש עודף שמן בתא השריפה; מכבים את המצתים באוויר כדי לקרר את הרוטור.',
-        'יחס הסיבובים 3:1 התהפך; מעלים סל"ד למקסימום.'
+        'כדי לחסוך חשמל בזמן טיסה ישרה.',
+        'כי בפנייה או בהאצה, כוח צנטריפוגלי מרגיש כמו כוח הכבידה ומנסה להטות את הסביבון לאנך שגוי — לכן מנתקים זמנית את היישור.',
+        'כי הסביבון מפסיק להסתובב מעל 10 מעלות הטיה.'
+      ],
+      ans: 1,
+      heExp: 'מצוין! זו אחת השאלות הכי אהובות בראיונות על VGU.',
+      enAns: '"During a turn or acceleration, centrifugal force shifts the apparent vertical. Erection Cut-Out temporarily disables leveling so the gyro does not precess to a false horizon."'
+    },
+    {
+      q: 'מה ההבדל בין ג\'ירו אנכי (VGU) לבין ג\'ירו קצבים (Rate Gyro) בבקרת הטיסה?',
+      opts: [
+        'VGU מודד זווית ביחס לאופק (כמה המטוס נטה), וג\'ירו קצבים מודד מהירות סיבוב (כמה מהר הוא מסתובב בשנייה).',
+        'אין הבדל, אלו שני שמות לאותו חיישן.',
+        'VGU מודד רק מהירות אוויר וגובה.'
       ],
       ans: 0,
-      exp: 'מדויק! בטיפוס המנוע במאמץ גבוה במהירות טיסה איטית יחסית (פחות זרימת אוויר לרדיאטור). הפחתת כוח ושיטוח הטיפוס משפרים מיד את מאזן הקירור.'
+      heExp: 'בול! המחשב צריך גם לדעת באיזו זווית המטוס נמצא (VGU) וגם כמה מהר הוא זז אליה כדי לבלום נדנודים (Rate Gyro).',
+      enAns: '"The VGU measures attitude angles (Pitch and Roll), while a Rate Gyro measures angular velocity—how fast the aircraft is rotating per second."'
     },
     {
-      q: 'למה מנוע ונקל בהרמס 450 מצויד בשני מצתים (Dual Ignition) באותו תא בעירה?',
+      q: 'בזנב V, אם המפעיל מושך אחורה להרמת אף (Pitch Up) ובמקביל נותן הגה כיוון ימינה (Yaw Right) — מה קורה למשטחים?',
       opts: [
-        'אחד משמש ליניקה והשני לפליטה.',
-        'לצורך יתירות (Redundancy) במקרה שאחד כושל, וגם כדי להבטיח בעירה שלמה בתא הצר והמאורך של הרוטור.',
-        'כדי להכפיל את מהירות הסיבוב של הפרופלור.'
+        'שניהם נשארים במקום כי הפקודות מבטלות זו את זו.',
+        'המיקסר מחבר את הפקודות: משטח שמאל עולה יותר חזק למעלה, ומשטח ימין מתקזז לפי ההפרש.',
+        'רק המאזנות בכנף זזות.'
       ],
       ans: 1,
-      exp: 'בול! צורת התא של מנוע רוטורי ארוכה וצרה, ולכן שני מצתים מבטיחים שהלהבה תתפשט לכל התערובת — וכמובן שרידות אם מערכת הצתה אחת תקולה.'
+      heExp: 'נכון מאוד! זה הרעיון של V-Tail Mixer — חיבור ליניארי בין פקודת העלרוד (משותפת) לפקודת הסבסוב (דיפרנציאלית).',
+      enAns: '"The V-tail mixer combines both commands: symmetrical deflection controls Pitch, and differential deflection controls Yaw."'
     },
     {
-      q: 'אם הרוטור המשולש משלים סיבוב שלם אחד (360°), כמה סיבובים מבצע גל הארכובה (והפרופלור)?',
+      q: 'מה המשמעות של "חוג סגור" (Closed-Loop) בבקרת טיסה?',
       opts: [
-        'סיבוב אחד בדיוק (1:1).',
-        '3 סיבובים (3:1) — כי כל אחת מ-3 הצלעות עוברת בעירה במהלך סיבוב רוטור אחד.',
-        'חצי סיבוב (1:2).'
+        'שהכטמ"מ טס רק במעגלים סגורים מעל הבסיס.',
+        'שהמערכת מודדת כל הזמן את התוצאה דרך חיישנים ומשווה אותה לפקודה כדי לתקן שגיאות אוטומטית.',
+        'שהדלק זורם במעגל סגור בלי משאבה.'
       ],
       ans: 1,
-      exp: 'נכון! בכל סיבוב אחד של הרוטור יש 3 פעימות כוח (אחת לכל תא), ובגלל יחס גלגלי השיניים הפנימיים הגל האקסצנטרי מסתובב פי 3 מהר יותר מהרוטור.'
+      heExp: 'מדויק! בלי משוב מהחיישנים (VGU וכו\'), רוח צד הייתה מטה את הכלי והמחשב לא היה יודע לתקן.',
+      enAns: '"Closed-loop control means the computer continuously checks sensor feedback against the target attitude and adjusts the surfaces to eliminate errors."'
     },
     {
-      q: 'נורת אזהרת אלטרנטור נדלקת באוויר (המנוע עדיין עובד תקין!). מה הסכנה העיקרית ומה המפעיל עושה?',
+      q: 'אם יחידת VGU אחת כושלת באוויר במטוס עם יתירות, איך תסביר לחניך מה קורה?',
       opts: [
-        'המנוע יכבה תוך 2 שניות בגלל מחסור בדלק.',
-        'אין ייצור חשמל למערכות המשימה והבקרה — עוברים לסוללות גיבוי ומבצעים Load Shedding (כיבוי צרכנים לא חיוניים כמו מטע"ד) בדרך חזרה.',
-        'הרוטור יסתובב הפוך.'
+        'המטוס מתרסק מיד בלי אפשרות תיקון.',
+        'מחשב הטיסה מזהה חריגה/תקלה ועובר אוטומטית למקור הגיבוי (כמו VGU שני או ערוץ אווירי/ניווט), כדי לשמור על שליטה.',
+        'המנועים נכבים כדי להגן על הג\'ירו.'
       ],
       ans: 1,
-      exp: 'חשיבה של מדריך אמיתי! המנוע ממשיך לתת דחף, אבל המטוס חי על זמן סוללה. כיבוי צרכנים כבדים (Load Shedding) מציל את החשמל למחשב הטיסה ולהגאים.'
+      heExp: 'מעולה! יתירות (Redundancy) היא עקרון יסוד בכל מערכת בקרת טיסה של כטמ"מ.',
+      enAns: '"Thanks to redundancy, if the primary VGU fails or disagrees, the flight control computer switches to the backup attitude source to keep the aircraft stable."'
     },
     {
-      q: 'למה הוחלף מנוע הונקל (הרמס 450) במנועי בוכנה / טורבו-דיזל (כמו Rotax / TAE-125) בהרמס 900?',
+      q: 'למה בשנים האחרונות עוברים מיחידת VGU מכנית ישנה ליחידות AHRS מודרניות?',
       opts: [
-        'כי מנוע ונקל לא יכול להסתובב מעל 1000 רגל.',
-        'כדי לאפשר שהייה ארוכה יותר, יעילות דלק בגובה רב, ושימוש בדלק סילוני נפוץ (Jet A-1) בלוגיסטיקה צבאית.',
-        'כי בהרמס 900 אין פתח פליטה.'
+        'כי ליחידות AHRS אלקטרוניות אין חלקים מכניים מסתובבים שנשחקים, הן קלות יותר, ומספקות גם כיוון וגם קצבים.',
+        'כי VGU מכני לא יודע למדוד זווית גלגול.',
+        'כי AHRS לא צריך חשמל בכלל.'
       ],
-      ans: 1,
-      exp: 'מצוין! הונקל מושלם לכלי קטן-בינוני בזכות יחס כוח/משקל ומעט רעידות, בעוד שכלי גדול וארוך-טווח כמו ההרמס 900 מרוויח מנצילות הדלק הגבוהה וה-Jet A-1 של מנועי בוכנה/דיזל.'
+      ans: 0,
+      heExp: 'תשובה של מדריכה עם ראייה תעשייתית רחבה!',
+      enAns: '"Modern AHRS units use solid-state sensors with no moving parts, offering lower weight, higher reliability, and full 3-axis data."'
     }
   ];
 
-  let qIdx = 0;
-  let xp = 0;
-  let answered = false;
+  let qIdx = 0, xp = 0, qAnswered = false;
 
-  function renderQuestion() {
-    answered = false;
-    const item = questions[qIdx];
-    document.getElementById('qCounter').textContent = `שאלה ${qIdx + 1} מתוך ${questions.length}`;
+  function renderQ() {
+    qAnswered = false;
+    const item = qaList[qIdx];
+    document.getElementById('qCounter').textContent = `שאלה ${qIdx + 1} מתוך ${qaList.length}`;
     document.getElementById('quizFeedback').style.display = 'none';
     document.getElementById('nextQBtn').style.display = 'none';
-
-    const container = document.getElementById('quizContainer');
-    container.innerHTML = `<p style="font-size:1.02rem; font-weight:700; margin-bottom:12px;">${item.q}</p>` +
-      item.opts.map((opt, i) => `<button class="quiz-opt" onclick="answerQuestion(${i}, this)">${opt}</button>`).join('');
+    document.getElementById('quizContainer').innerHTML =
+      `<p style="font-size:1.02rem; font-weight:700;">${item.q}</p>` +
+      item.opts.map((o, i) => `<button class="quiz-opt" onclick="pickQ(${i})">${o}</button>`).join('');
   }
 
-  function answerQuestion(choice, btn) {
-    if (answered) return;
-    answered = true;
-    const item = questions[qIdx];
-    const btns = document.querySelectorAll('.quiz-opt');
-    btns.forEach((b, i) => {
+  function pickQ(choice) {
+    if (qAnswered) return;
+    qAnswered = true;
+    const item = qaList[qIdx];
+    document.querySelectorAll('.quiz-opt').forEach((b, i) => {
       if (i === item.ans) b.classList.add('correct');
       else if (i === choice) b.classList.add('wrong');
     });
-
     const fb = document.getElementById('quizFeedback');
     fb.style.display = 'block';
-    if (choice === item.ans) {
+    const isRight = choice === item.ans;
+    if (isRight) {
       xp += 100;
-      document.getElementById('xpBadge').textContent = `XP: ${xp} / 500`;
-      fb.innerHTML = `<strong style="color:var(--good);">✅ תשובה נכונה! (+100 XP)</strong><br>${item.exp}`;
-    } else {
-      fb.innerHTML = `<strong style="color:var(--power);">❌ כמעט!</strong><br>${item.exp}`;
+      document.getElementById('xpBadge').textContent = `XP: ${xp} / 600`;
     }
+    fb.innerHTML = `
+      <strong style="color:${isRight ? '#22c55e' : '#ef4444'};">${isRight ? '✅ תשובה מדויקת! (+100 XP)' : '❌ כמעט — הנה ההסבר:'}</strong>
+      <p style="margin:6px 0;">${item.heExp}</p>
+      <div class="speak-box"><span class="tag green">HOW TO SAY IT IN ENGLISH</span><p style="margin:0;">${item.enAns}</p></div>
+    `;
     document.getElementById('nextQBtn').style.display = 'inline-block';
   }
 
-  function nextQuestion() {
-    qIdx = (qIdx + 1) % questions.length;
-    renderQuestion();
+  function nextQ() {
+    qIdx = (qIdx + 1) % qaList.length;
+    renderQ();
   }
-  renderQuestion();
+  renderQ();
+
+  // ---------------- TAB 4: LESSON BLUEPRINTS ----------------
+  const blueprints = {
+    vgu: [
+      { t: '00:00–02:30', title: 'פתיחה ו"למה?"', desc: 'טיסה בתוך ענן בלילה: בלי שמיים וקרקע, המטוס חייב אוזן פנימית שתמדוד גלגול ועלרוד. הצגת המטרות של השיעור.' },
+      { t: '02:30–06:30', title: 'העיקרון הפיזיקלי', desc: 'איך סביבון מסתובב שומר על כיוון בחלל (Rigidity), ואיך החיישן קורא את הזווית בין הקופסה הנוטה לסביבון הישר.' },
+      { t: '06:30–12:00', title: 'זקיפה וניתוק זקיפה', desc: 'למה הג\'ירו נסחף לאט, איך מערכת הזקיפה מתקנת אותו, ואיך Erection Cut-Out מונע שגיאה בפניות ובתאוצות.' },
+      { t: '12:00–17:00', title: 'אינטגרציה, בדיקות ותקלה', desc: 'לאן ה-VGU מחובר (מחשב בקרת הטיסה), יתירות/בדיקות לפני טיסה, ומה עושים אם מתקבלת קריאת זווית שגויה.' },
+      { t: '17:00–20:00', title: 'סיכום ושאלת החניכים', desc: 'סיכום ב-3 משפטים קצרים + 2 שאלות הבנה למראיינים (למשל: "מה יקרה לזווית האופק בפנייה חדה אם מנגנון ה-Cut-Out תקול?").' }
+    ],
+    fc: [
+      { t: '00:00–02:30', title: 'פתיחה ו"למה?"', desc: 'איך כלי טיס בלי טייס בתא הטייס נשאר יציב ברוח ומבצע משימה? הכרת תפקיד מערכת בקרת הטיסה.' },
+      { t: '02:30–07:00', title: 'החוג הסגור (Closed Loop)', desc: 'שרטוט המעגל: חיישנים (כמו VGU וג\'ירו קצבים) ← מחשב טיסה ← סרוואים ← משטחי היגוי ← תנועת הכלי.' },
+      { t: '07:00–12:30', title: 'אווירודינמיקה וזנב V', desc: 'תפקיד המאזנות בגלגול, ואיך זנב V משלב עלרוד (תנועה משותפת) עם סבסוב (תנועה מנוגדת).' },
+      { t: '12:30–17:00', title: 'יתירות ומענה לתקלה', desc: 'מה קורה כשחיישן או ערוץ שליטה אחד נופל — איך המערכת עוברת לגיבוי ושומרת על בטיחות טיסה.' },
+      { t: '17:00–20:00', title: 'סיכום ושאלת החניכים', desc: 'סיכום החוג הסגור + שאלת בדיקה למראיינים ("אם נתקע משטח זנב ימין, אילו צירים יושפעו?").' }
+    ]
+  };
+
+  function renderBlueprint(key, btn) {
+    if (btn) {
+      btn.parentElement.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    document.getElementById('blueprintBox').innerHTML = blueprints[key].map(s => `
+      <div class="timeline-step">
+        <div class="t-badge">${s.t}</div>
+        <div><strong>${s.title}:</strong> ${s.desc}</div>
+      </div>
+    `).join('');
+  }
+  renderBlueprint('vgu');
 </script>
 </body>
 </html>
