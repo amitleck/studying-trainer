@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>מאמן ראיון הדרכה | VGU ובקרת טיסה</title>
+  <title>מאמן בקרת טיסה | גרסה 3</title>
   <style>
     :root {
       --bg: #0b1220;
@@ -69,10 +69,10 @@
       background: var(--panel);
       color: var(--muted);
       border: 1px solid var(--border);
-      padding: 10px 16px;
+      padding: 10px 15px;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
       white-space: nowrap;
       transition: 0.15s;
@@ -84,17 +84,17 @@
       border-color: var(--accent);
     }
 
-    main { max-width: 1240px; margin: 0 auto; padding: 20px; }
+    main { max-width: 1260px; margin: 0 auto; padding: 20px; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.25fr 0.75fr;
       gap: 20px;
       align-items: start;
     }
-    @media (max-width: 940px) { .grid-2 { grid-template-columns: 1fr; } }
+    @media (max-width: 960px) { .grid-2 { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--panel);
@@ -124,7 +124,7 @@
       padding: 8px 12px;
       border-radius: 10px;
     }
-    .slider-row span.lbl { min-width: 115px; font-weight: 600; }
+    .slider-row span.lbl { min-width: 125px; font-weight: 600; }
     .slider-row input[type="range"] { flex: 1; accent-color: var(--accent); }
     .slider-row span.val { min-width: 48px; text-align: left; font-weight: 700; color: var(--accent); }
 
@@ -133,17 +133,41 @@
       background: var(--panel-2);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 9px 14px;
+      padding: 9px 13px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       font-weight: 600;
       transition: 0.15s;
     }
     button.btn:hover { border-color: var(--accent); }
     button.btn.primary { background: var(--accent); color: #061224; border-color: var(--accent); }
-    button.btn.warn-active { background: rgba(245, 158, 11, 0.2); border-color: var(--warn); color: #fcd34d; }
-    button.btn.danger-active { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: #fca5a5; }
+    button.btn.warn-active { background: rgba(245, 158, 11, 0.22); border-color: var(--warn); color: #fcd34d; }
+    button.btn.danger-active { background: rgba(239, 68, 68, 0.22); border-color: var(--danger); color: #fca5a5; }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .mod-btn {
+      background: var(--panel-2);
+      border: 2px solid var(--border);
+      color: var(--text);
+      border-radius: 11px;
+      padding: 11px 10px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 0.86rem;
+      font-weight: 700;
+      transition: 0.15s;
+    }
+    .mod-btn:hover, .mod-btn.active {
+      border-color: var(--accent);
+      background: #1f335c;
+    }
+    .mod-btn small { display: block; font-weight: 400; color: var(--muted); font-size: 0.76rem; margin-top: 2px; }
 
     .mode-switch {
       display: inline-flex;
@@ -176,7 +200,7 @@
       border-radius: 10px;
       padding: 12px 14px;
       font-family: "Consolas", "Courier New", monospace;
-      font-size: 0.87rem;
+      font-size: 0.86rem;
       color: #dbeafe;
     }
     .speak-box {
@@ -187,7 +211,7 @@
       border-left: 4px solid var(--good);
       border-radius: 10px;
       padding: 12px 14px;
-      font-size: 0.92rem;
+      font-size: 0.91rem;
       color: #d1fae5;
     }
     .tag {
@@ -210,7 +234,24 @@
       margin-top: 10px;
       font-size: 0.9rem;
     }
-    .info-box.warn { border-right-color: var(--warn); }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 600px) { .status-grid { grid-template-columns: 1fr; } }
+    .status-card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-right: 4px solid var(--good);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.86rem;
+    }
+    .status-card.warn { border-right-color: var(--warn); }
+    .status-card.danger { border-right-color: var(--danger); }
 
     .quiz-opt {
       display: block;
@@ -248,201 +289,200 @@
       border-right: 4px solid var(--accent);
     }
     .t-badge { font-weight: 800; color: var(--accent); min-width: 95px; font-size: 0.88rem; }
-
-    .surface-readout {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .readout-item {
-      background: var(--panel-2);
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      border: 1px solid var(--border);
-    }
   </style>
 </head>
 <body>
 
 <header>
   <div class="brand">
-    <h1>מאמן ראיון הדרכה | VGU (ג'ירו אנכי) ובקרת טיסה</h1>
-    <p>מבנה מותאם לימין-לשמאל: סימולציות חיות, הסבר אינטואיטיבי, תקן STE-100 ואימון אנגלית לראיון</p>
+    <h1>מאמן ראיון הדרכה | מערכת בקרת טיסה (גרסה 3)</h1>
+    <p>מחשב ניהול טיסה, מודול חיישנים, מיקום-הנחיה-ייצוב, מודול סרוו ומעבדת שפת זרימה ומאזנות</p>
   </div>
   <div class="hud-stats">
-    <span class="pill">שני נושאי הראיון</span>
-    <span class="pill xp" id="xpBadge">XP: 0 / 600</span>
+    <span class="pill">נושא ההדרכה: בקרת טיסה</span>
+    <span class="pill xp" id="xpBadge">XP: 0 / 700</span>
   </div>
 </header>
 
 <nav class="tabs">
-  <button class="tab-btn active" onclick="switchTab('vgu', this)">1. ג'ירו אנכי — מעבדה חיה (VGU)</button>
-  <button class="tab-btn" onclick="switchTab('fc', this)">2. בקרת טיסה וזנב V</button>
-  <button class="tab-btn" onclick="switchTab('qa', this)">3. אנגלית ושאלות קשות מהראיון</button>
-  <button class="tab-btn" onclick="switchTab('lesson', this)">4. שלד שיעור ל-20 דקות</button>
+  <button class="tab-btn active" onclick="switchTab('fcTab', this)">1. מערכת בקרת הטיסה (FMS, חיישנים וסרוו)</button>
+  <button class="tab-btn" onclick="switchTab('aeroTab', this)">2. מעבדת אווירודינמיקה (שפת זרימה ומאזנות)</button>
+  <button class="tab-btn" onclick="switchTab('vguTab', this)">3. סימולטור VGU וכוחות ג'י</button>
+  <button class="tab-btn" onclick="switchTab('qaTab', this)">4. שאלות ראיון ואנגלית</button>
+  <button class="tab-btn" onclick="switchTab('lessonTab', this)">5. שלד שיעור ל-20 דקות</button>
 </nav>
 
 <main>
-  <!-- TAB 1: VGU SIMULATOR -->
-  <section id="vgu" class="tab-panel active">
+  <!-- TAB 1: FMS, SENSOR MODULE, GUIDANCE/SAS, SERVO MODULE -->
+  <section id="fcTab" class="tab-panel active">
     <div class="grid-2">
       <div class="card">
-        <h2>הדמיית ג'ירו אנכי: בחוץ מול בפנים</h2>
-        <canvas id="vguCanvas" width="620" height="330"></canvas>
+        <h2>זרימת המידע במערכת בקרת הטיסה (חוג סגור מלא)</h2>
+        <canvas id="fmsCanvas" width="660" height="390"></canvas>
+
+        <div class="controls">
+          <div class="btn-row">
+            <button class="btn primary" id="gustBtn" onclick="triggerGust()">💨 שלח משב רוח פתאומי (בדיקת SAS!)</button>
+            <button class="btn" id="fmsFaultBtn" onclick="toggleFmsFault()">⚠️ תקלה ב-VGU ראשי (מעבר לגיבוי)</button>
+          </div>
+          <div class="info-box" id="sasStatusBox">
+            סטטוס ייצוב: <strong>טיסה שקטה</strong> — לחצי על "שלח משב רוח" כדי לראות איך מערכת ה-SAS בולמת הפרעה תוך שבריר שנייה.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3>לחצי על רכיב כדי להבין מה הוא עושה:</h3>
+          <div class="module-grid">
+            <button class="mod-btn active" onclick="selectFmsMod('sensors', this)">מודול חיישנים<small>VGU + FMU + GPS</small></button>
+            <button class="mod-btn" onclick="selectFmsMod('fms', this)">מחשב ניהול טיסה<small>FMS / המוח המרכזי</small></button>
+            <button class="mod-btn" onclick="selectFmsMod('layers', this)">מיקום, הנחיה ו-SAS<small>שלוש הקומות במחשב</small></button>
+            <button class="mod-btn" onclick="selectFmsMod('servo', this)">מודול הסרוו<small>השרירים + משוב</small></button>
+          </div>
+
+          <div id="fmsDetail"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2: AERODYNAMICS PLAYGROUND (TRAILING EDGE, AILERONS, ROLL & PITCH) -->
+  <section id="aeroTab" class="tab-panel">
+    <div class="grid-2">
+      <div class="card">
+        <h2>משחק אווירודינמיקה: שפת זרימה, מאזנות ולאן המטוס הולך</h2>
+        <canvas id="aeroCanvas" width="660" height="410"></canvas>
+
+        <div class="controls">
+          <div class="btn-row">
+            <button class="btn" onclick="setAeroPreset(-28, 0)">⬅️ פנייה שמאלה</button>
+            <button class="btn" onclick="setAeroPreset(28, 0)">➡️ פנייה ימינה</button>
+            <button class="btn" onclick="setAeroPreset(0, 18)">⬆️ הרמת אף (טיפוס)</button>
+            <button class="btn" onclick="setAeroPreset(0, -18)">⬇️ הורדת אף (צלילה)</button>
+            <button class="btn primary" onclick="setAeroPreset(0, 0)">טיסה ישרה</button>
+          </div>
+          <div class="slider-row">
+            <span class="lbl">פקודת גלגול (מאזנות):</span>
+            <input type="range" id="aeroRoll" min="-35" max="35" value="0" />
+            <span class="val" id="aeroRollVal">0°</span>
+          </div>
+          <div class="slider-row">
+            <span class="lbl">פקודת עלרוד (זנב):</span>
+            <input type="range" id="aeroPitch" min="-25" max="25" value="0" />
+            <span class="val" id="aeroPitchVal">0°</span>
+          </div>
+        </div>
+
+        <div class="info-box" id="aeroSummary">
+          מצב כרגע: <strong>טיסה ישרה ומאוזנת</strong> — שפות הזרימה ישרות והמטוס טס קדימה בקו ישר.
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3>איך עובד עיקרון שפת הזרימה והמאזנות?</h3>
+          <div class="mode-switch">
+            <button class="mode-btn active" onclick="setMode('aero', 'kid', this)">הסבר של ילד (עברית)</button>
+            <button class="mode-btn" onclick="setMode('aero', 'ste', this)">תקן STE-100</button>
+            <button class="mode-btn" onclick="setMode('aero', 'speak', this)">משפטים באנגלית לראיון</button>
+          </div>
+
+          <div id="aero-kid">
+            <p><strong>הכלל הפשוט ביותר בתעופה (חוק הפעולה והתגובה):</strong></p>
+            <p>מאחורי הכנף (ב<strong>שפת הזרימה</strong>) יש דלת קטנה שזזה למעלה ולמטה. האוויר שטס על הכנף נתקע בדלת הזאת ונדחף לכיוון שאליו היא פונה — <strong>והכנף נדחפת לכיוון ההפוך!</strong></p>
+            <ul style="padding-right:18px; margin:8px 0;">
+              <li><strong>שפת זרימה יורדת למטה</strong> ← דוחפת אוויר למטה ← <strong>הכנף עולה למעלה!</strong></li>
+              <li><strong>שפת זרימה עולה למעלה</strong> ← דוחפת אוויר למעלה ← <strong>הכנף יורדת למטה!</strong></li>
+            </ul>
+            <div class="info-box">
+              <strong>מה קורה במאזנות בפנייה ימינה?</strong><br>
+              • מאזנת <strong>ימין עולה למעלה</strong> ← דוחפת את כנף ימין <strong>למטה</strong>.<br>
+              • מאזנת <strong>שמאל יורדת למטה</strong> ← מרימה את כנף שמאל <strong>למעלה</strong>.<br>
+              הכנפיים נוטות ימינה, חלק מכוח העילוי מושך פנימה לסיבוב, <strong>והמטוס פונה ימינה!</strong> (ובפנייה שמאלה — בדיוק הפוך).
+            </div>
+          </div>
+
+          <div id="aero-ste" style="display:none;">
+            <div class="ste-box">
+              <span class="tag">ASD-STE100</span>
+              <p>THE AILERONS ATTACH TO THE TRAILING EDGE OF EACH WING. THEY MOVE IN OPPOSITE DIRECTIONS.</p>
+              <p>TO ROLL RIGHT, THE RIGHT AILERON MOVES UP AND THE LEFT AILERON MOVES DOWN. AIRFLOW PUSHES THE RIGHT WING DOWN AND THE LEFT WING UP.</p>
+              <p>TO PITCH UP, THE V-TAIL SURFACES MOVE UP TOGETHER. AIRFLOW PUSHES THE TAIL DOWN AND RAISES THE NOSE.</p>
+            </div>
+          </div>
+
+          <div id="aero-speak" style="display:none;">
+            <div class="speak-box">
+              <span class="tag green">PRESENTER SCRIPT</span>
+              <p>"Control surfaces sit on the trailing edge and work by Newton's third law: push the air one way, and the aircraft reacts the opposite way."</p>
+              <p>"When a trailing edge goes down, it deflects air downward, which creates more lift and pushes that wing up. Ailerons always work differentially—one up, one down."</p>
+              <p>"So to turn right, the right aileron goes up to drop the right wing, while the left aileron goes down to lift the left wing, banking the aircraft into a right turn."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: VGU SIMULATOR (PRESERVED FROM V2.1) -->
+  <section id="vguTab" class="tab-panel">
+    <div class="grid-2">
+      <div class="card">
+        <h2>הדמיית ג'ירו אנכי (רכיב מרכזי בתוך מודול החיישנים)</h2>
+        <canvas id="vguCanvas" width="640" height="365"></canvas>
 
         <div class="controls">
           <div class="slider-row">
-            <span class="lbl">זווית גלגול (Roll):</span>
+            <span class="lbl">זווית גלגול:</span>
             <input type="range" id="vguRoll" min="-40" max="40" value="0" />
             <span class="val" id="vguRollVal">0°</span>
           </div>
           <div class="slider-row">
-            <span class="lbl">זווית עלרוד (Pitch):</span>
+            <span class="lbl">זווית עלרוד:</span>
             <input type="range" id="vguPitch" min="-25" max="25" value="0" />
             <span class="val" id="vguPitchVal">0°</span>
           </div>
           <div class="btn-row">
-            <button class="btn" id="turnBtn" onclick="toggleTurn()">🔄 הדמיית פנייה מתמשכת / תאוצה</button>
+            <button class="btn" id="turnBtn" onclick="toggleTurn()">🔄 הדמיית פנייה מתמשכת (כוח ג'י)</button>
+            <button class="btn" id="noCutOutBtn" onclick="toggleNoCutOut()">🧪 מה קורה בלי ניתוק זקיפה?</button>
             <button class="btn" onclick="resetVgu()">איפוס לאופק ישר</button>
           </div>
         </div>
 
-        <div class="info-box warn" id="vguStatusBox">
-          מצב מערכת זקיפה: <strong>פעילה (מיישרת בעדינות לכבידה)</strong> — המטוס בטיסה ישרה או בהטיה קטנה.
+        <div class="status-grid">
+          <div class="status-card" id="measureCard">
+            <strong>1. מדידת הזווית (פעילה תמיד):</strong><br>
+            <span id="measureText">מודד 0° גלגול.</span>
+          </div>
+          <div class="status-card" id="erectionCard">
+            <strong>2. מנגנון הזקיפה (מטוטלת):</strong><br>
+            <span id="erectionText">פעיל — שומר שהסביבון לא ייסחף.</span>
+          </div>
         </div>
       </div>
 
       <div>
         <div class="card">
-          <h3>איך הג'ירו האנכי עובד? (בחרי סגנון קריאה)</h3>
-          <div class="mode-switch">
-            <button class="mode-btn active" onclick="setMode('vgu', 'kid', this)">הסבר של ילד (עברית)</button>
-            <button class="mode-btn" onclick="setMode('vgu', 'ste', this)">תקן STE-100</button>
-            <button class="mode-btn" onclick="setMode('vgu', 'speak', this)">מה להגיד באנגלית בראיון</button>
-          </div>
-
-          <div id="vgu-kid">
-            <p><strong>הבעיה:</strong> בתוך ענן או בלילה, המטוס לא יודע איפה השמיים ואיפה הקרקע.</p>
-            <p><strong>הפתרון (הסביבון):</strong> בתוך קופסת ה-VGU יש גלגל מתכת כבד שמסתובב מהר מאוד. בגלל חוק פיזיקלי שנקרא <strong>קשיחות במרחב</strong>, הסביבון מתעקש להישאר עומד ישר כל הזמן — גם כשהמטוס עצמו מתגלגל ימינה או מרים אף.</p>
-            <p><strong>איך מודדים?</strong> הקופסה החיצונית מוברגת למטוס ולכן זזה יחד איתו. חיישנים (פוטנציומטרים או רזולברים) מודדים את הזווית בין הקופסה שנטתה לבין הסביבון שנשאר ישר — וככה יודעים את זווית ה<strong>גלגול</strong> וה<strong>עלרוד</strong>!</p>
-            <div class="info-box">
-              <strong>הסוד של מדריכים — מערכת זקיפה וניתוק זקיפה:</strong><br>
-              בגלל חיכוך וסיבוב כדור הארץ, הסביבון נוטה לזוז לאט הצידה (Drift). לכן יש לו מטוטלת קטנה שמחזירה אותו לאנך האמיתי. <strong>אבל בפנייה או בהאצה</strong>, כוח צנטריפוגלי מרגיש כמו כוח הכבידה ומנסה להטעות את הג'ירו! לכן מעל זווית הטיה מסוימת, המערכת <strong>מנתקת זמנית את היישור</strong> (Erection Cut-Out) עד שהפנייה נגמרת.
-            </div>
-          </div>
-
-          <div id="vgu-ste" style="display:none;">
-            <div class="ste-box">
-              <span class="tag">ASD-STE100</span>
-              <p>THE VERTICAL GYRO UNIT (VGU) MEASURES AIRCRAFT PITCH AND ROLL ANGLES.</p>
-              <p>A SPINNING ROTOR KEEPS ITS VERTICAL POSITION IN SPACE. WHEN THE AIRCRAFT TILTS, THE UNIT MEASURES THE ANGLE BETWEEN THE HOUSING AND THE ROTOR.</p>
-              <p>THE ERECTION SYSTEM CORRECTS SLOW GYRO DRIFT. DURING A TURN OR ACCELERATION, THE SYSTEM CUTS OUT ERECTION TO PREVENT FALSE VERTICAL ERRORS.</p>
-            </div>
-          </div>
-
-          <div id="vgu-speak" style="display:none;">
-            <div class="speak-box">
-              <span class="tag green">PRESENTER SCRIPT</span>
-              <p>"Think of the VGU as the aircraft's inner ear. Its job is to answer one critical question: where is down? It gives us continuous Pitch and Roll data."</p>
-              <p>"Inside, a fast-spinning rotor resists tilting. When the UAV banks, the outer case moves with the aircraft while the gyro stays upright, and sensors read the angle difference."</p>
-              <p>"One key detail: during a sustained turn, centrifugal force tricks the leveling pendulum. So the VGU uses Erection Cut-Out above a threshold bank angle to stay accurate."</p>
-            </div>
+          <h3>תזכורת מהירה על יחידת הג'ירו האנכי בהקשר של בקרת טיסה</h3>
+          <p>כאשר מציגים את בקרת הטיסה, ה-VGU הוא אחד החיישנים המרכזיים בתוך <strong>מודול החיישנים</strong>. הוא זה שמספר ל-FMS מה זווית הגלגול והעלרוד האמיתית של הכלי.</p>
+          <div class="info-box">
+            <strong>נקודת מפתח להרצאה:</strong> בפנייה חדה כוח הכבידה והכוח הצנטריפוגלי יוצרים יחד כוח ג'י שמצביע דרך רצפת המטוס ומטעה את המטוטלת. לכן מחשב בקרת הטיסה (או מתג פנימי) שולח פקודת ניתוק זקיפה זמנית (Cut-Out) — בזמן שמדידת הזווית עצמה ממשיכה לעבוד רציף!
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TAB 2: FLIGHT CONTROL & V-TAIL -->
-  <section id="fc" class="tab-panel">
-    <div class="grid-2">
-      <div class="card">
-        <h2>מערכת בקרת טיסה: מבט מאחור על זנב V וחוג סגור</h2>
-        <canvas id="fcCanvas" width="620" height="390"></canvas>
-
-        <div class="controls">
-          <div class="slider-row">
-            <span class="lbl">פקודת עלרוד (Pitch):</span>
-            <input type="range" id="fcPitch" min="-100" max="100" value="0" />
-            <span class="val" id="fcPitchVal">0%</span>
-          </div>
-          <div class="slider-row">
-            <span class="lbl">פקודת גלגול (Roll):</span>
-            <input type="range" id="fcRoll" min="-100" max="100" value="0" />
-            <span class="val" id="fcRollVal">0%</span>
-          </div>
-          <div class="slider-row">
-            <span class="lbl">פקודת סבסוב (Yaw):</span>
-            <input type="range" id="fcYaw" min="-100" max="100" value="0" />
-            <span class="val" id="fcYawVal">0%</span>
-          </div>
-          <div class="btn-row">
-            <button class="btn" id="faultBtn" onclick="toggleSensorFault()">⚠️ הדמה תקלת VGU ראשי (מעבר לגיבוי)</button>
-            <button class="btn" onclick="resetFc()">מרכז הגאים</button>
-          </div>
-        </div>
-
-        <div class="surface-readout" id="surfaceReadout"></div>
-      </div>
-
-      <div>
-        <div class="card">
-          <h3>איך בקרת הטיסה מחברת הכול יחד?</h3>
-          <div class="mode-switch">
-            <button class="mode-btn active" onclick="setMode('fc', 'kid', this)">הסבר של ילד (עברית)</button>
-            <button class="mode-btn" onclick="setMode('fc', 'ste', this)">תקן STE-100</button>
-            <button class="mode-btn" onclick="setMode('fc', 'speak', this)">מה להגיד באנגלית בראיון</button>
-          </div>
-
-          <div id="fc-kid">
-            <p><strong>חוג סגור (Closed Loop) — כמו נהיגה ברכב:</strong></p>
-            <p>אתה מסובב הגה, העיניים רואות אם הרכב סוטה, והידיים מתקנות מיד. בכטמ"מ זה עובד אותו דבר אוטומטית:</p>
-            <ul style="padding-right:18px; margin:6px 0;">
-              <li><strong>החיישנים (העיניים):</strong> הג'ירו האנכי (זווית), ג'ירו קצבים (מהירות תנועה), חיישני אוויר (מהירות וגובה) וניווט.</li>
-              <li><strong>מחשב הטיסה (המוח):</strong> משווה איפה הכלי נמצא מול מה שהטייס או המסלול ביקשו, ומחשב תיקון עשרות פעמים בשנייה.</li>
-              <li><strong>הסרוואים (השרירים):</strong> מנועים קטנים שמזיזים את המשטחים על הכנף והזנב.</li>
-            </ul>
-            <div class="info-box">
-              <strong>הקסם של זנב V (משטחים משולבים):</strong><br>
-              במקום הגה גובה והגה כיוון נפרדים, שני משטחי הזנב עושים עבודה כפולה:<br>
-              • כששניהם עולים <strong>יחד</strong> ← האף עולה (עלרוד).<br>
-              • כשאחד עולה והשני יורד (<strong>מנוגדים</strong>) ← הכלי מסתובב ימינה או שמאלה (סבסוב).
-            </div>
-          </div>
-
-          <div id="fc-ste" style="display:none;">
-            <div class="ste-box">
-              <span class="tag">ASD-STE100</span>
-              <p>THE FLIGHT CONTROL SYSTEM OPERATES AS A CLOSED LOOP.</p>
-              <p>SENSORS SEND ATTITUDE AND AIR DATA TO THE FLIGHT CONTROL COMPUTER. THE COMPUTER CALCULATES CORRECTIONS AND SENDS COMMANDS TO THE SERVO ACTUATORS.</p>
-              <p>ON A V-TAIL, SYMMETRICAL DEFLECTION CONTROLS PITCH. DIFFERENTIAL DEFLECTION CONTROLS YAW. REDUNDANT CHANNELS MAINTAIN CONTROL IF ONE SENSOR FAILS.</p>
-            </div>
-          </div>
-
-          <div id="fc-speak" style="display:none;">
-            <div class="speak-box">
-              <span class="tag green">PRESENTER SCRIPT</span>
-              <p>"A UAV flight control system is a continuous closed loop: Sense, Compute, and Act."</p>
-              <p>"Sensors like the VGU tell the Flight Control Computer the current attitude. The computer compares that to the desired path and drives the servos."</p>
-              <p>"Notice the V-tail mixer: moving both surfaces together gives Pitch, while moving them in opposite directions gives Yaw. And to keep the aircraft safe, critical sensors and computers have redundancy."</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TAB 3: INTERVIEW Q&A SIMULATOR -->
-  <section id="qa" class="tab-panel">
+  <!-- TAB 4: INTERVIEW Q&A SIMULATOR -->
+  <section id="qaTab" class="tab-panel">
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <h2 style="margin:0;">סימולטור שאלות קשות מהראיון (מענה לשאלות + אנגלית)</h2>
-        <span class="pill" id="qCounter">שאלה 1 מתוך 6</span>
+        <h2 style="margin:0;">סימולטור שאלות ראיון בבקרת טיסה (עם מענה באנגלית)</h2>
+        <span class="pill" id="qCounter">שאלה 1 מתוך 7</span>
       </div>
       <p style="color:var(--muted); font-size:0.9rem;">
-        המראיין כתב שייבחן גם <strong>מענה לשאלות</strong> וגם <strong>רמת אנגלית</strong>. התאמני כאן על 6 השאלות שהכי אוהבים לשאול בהדרכות אוויוניקה ובקרת טיסה:
+        7 שאלות ממוקדות על המושגים שלמדת עכשיו, כדי שתשחיזי גם את ההבנה וגם את הניסוח באנגלית:
       </p>
       <div id="quizContainer"></div>
       <div id="quizFeedback" class="feedback-box"></div>
@@ -452,21 +492,20 @@
     </div>
   </section>
 
-  <!-- TAB 4: 20-MIN LESSON BLUEPRINT -->
-  <section id="lesson" class="tab-panel">
+  <!-- TAB 5: 20-MIN LESSON BLUEPRINT -->
+  <section id="lessonTab" class="tab-panel">
     <div class="card">
-      <h2>תבנית שיעור מנצחת ל-20 דקות (בחרי נושא להתאמה)</h2>
-      <div class="mode-switch">
-        <button class="mode-btn active" onclick="renderBlueprint('vgu', this)">תבנית לשיעור על ג'ירו אנכי (VGU)</button>
-        <button class="mode-btn" onclick="renderBlueprint('fc', this)">תבנית לשיעור על בקרת טיסה</button>
-      </div>
+      <h2>שלד שיעור ל-20 דקות — מותאם במיוחד לבקרת טיסה</h2>
+      <p style="color:var(--muted); font-size:0.9rem;">
+        שיעור מובנה שמתחיל מהבעיה, מציג את ארבעת המודולים בצורה נקייה, ומסתיים בתקלה ובשאלה לחניכים:
+      </p>
       <div id="blueprintBox"></div>
     </div>
   </section>
 </main>
 
 <script>
-  // ---------------- TAB & MODE HELPERS ----------------
+  // ---------------- TAB NAVIGATION ----------------
   function switchTab(id, btn) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -482,10 +521,475 @@
     });
   }
 
-  // ---------------- TAB 1: VGU CANVAS SIMULATION ----------------
+  // ---------------- TAB 1: FMS INTERACTIVE MODULE DETAILS ----------------
+  const fmsModules = {
+    sensors: {
+      title: 'מודול החיישנים (Sensor Module) — העיניים והאוזניים',
+      kid: 'אוסף את כל המדידות מהעולם החיצון: ג\'ירו אנכי (VGU) לגלגול ועלרוד, חיישן שדה מגנטי (FMU) לכיוון המצפן, מקלט GPS למיקום וגובה במפה, ובדרך כלל גם ג\'ירו קצבים ונתוני אוויר (מהירות ולחץ).',
+      ste: 'THE SENSOR MODULE COLLECTS ATTITUDE, HEADING, POSITION, AND AIR DATA. IT SENDS THIS DATA TO THE FLIGHT MANAGEMENT SYSTEM.',
+      speak: '"The Sensor Module combines attitude from the VGU, magnetic heading from the FMU, and position from the GPS—giving the computer a complete picture of the aircraft state."'
+    },
+    fms: {
+      title: 'מחשב ניהול הטיסה (FMS / המוח המרכזי)',
+      kid: 'המוח שמחבר את משימת הטיסה (נקודות ציון, גובה, פקודות מהקרקע) לבין הנתונים ממודול החיישנים. הוא בודק כל הזמן מה הפער בין המצב הרצוי למצב האמיתי ומחשב תיקונים.',
+      ste: 'THE FLIGHT MANAGEMENT SYSTEM COMPARES SENSOR DATA AGAINST THE MISSION PLAN. IT CALCULATES COMMANDS TO KEEP THE AIRCRAFT ON THE PATH.',
+      speak: '"The Flight Management System is the central brain. It takes mission commands and sensor feedback, compares desired versus actual state, and generates control commands."'
+    },
+    layers: {
+      title: 'שלוש הקומות: Position, Guidance, SAS',
+      kid: '• מיקום (Position): איפה אני על המפה ובאיזה גובה?<br>• הנחיה (Guidance): לאיזה כיוון וגובה לטוס כדי להגיע ליעד (לולאה איטית ורחבה)?<br>• הגברת יציבות (SAS): תגובה תוך שבריר שנייה לרוח ונדנודים כדי שהטיסה תהיה חלקה (לולאה מהירה פנימית)!',
+      ste: 'POSITION DETERMINES AIRCRAFT LOCATION. GUIDANCE DIRECTS THE AIRCRAFT ALONG THE FLIGHT PATH. THE SAS DAMPS RAPID DISTURBANCES FOR SMOOTH FLIGHT.',
+      speak: '"Position tells us where we are. Guidance plans the trajectory to the waypoint in the outer loop. SAS works rapidly in the inner loop to damp wind gusts and keep the UAV stable."'
+    },
+    servo: {
+      title: 'מודול הסרוו (Servo Module) — השרירים',
+      kid: 'המחשב מדבר רק בחשמל. מודול הסרוו הופך את פקודות המחשב לתנועה מכנית של המאזנות ושל משטחי הזנב. בתוכו יש גם חיישן מיקום פנימי שמדווח למחשב שהמשטח אכן זז לזווית הנדרשת.',
+      ste: 'THE SERVO MODULE CONVERTS ELECTRICAL COMMANDS INTO MECHANICAL DEFLECTION. INTERNAL SENSORS REPORT THE ACTUAL SURFACE POSITION BACK TO THE COMPUTER.',
+      speak: '"The Servo Module acts as the muscles. It converts digital commands from the FMS into physical movement of the control surfaces, with internal position feedback."'
+    }
+  };
+
+  let curFmsKey = 'sensors';
+  let curFmsMode = 'kid';
+
+  function selectFmsMod(key, btn) {
+    document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    curFmsKey = key;
+    renderFmsDetail();
+  }
+
+  function setFmsMode(mode) {
+    curFmsMode = mode;
+    renderFmsDetail();
+  }
+
+  function renderFmsDetail() {
+    const d = fmsModules[curFmsKey];
+    let bodyHtml = '';
+    if (curFmsMode === 'kid') {
+      bodyHtml = `<p style="margin:6px 0;">${d.kid}</p>`;
+    } else if (curFmsMode === 'ste') {
+      bodyHtml = `<div class="ste-box"><span class="tag">ASD-STE100</span><p style="margin:0;">${d.ste}</p></div>`;
+    } else {
+      bodyHtml = `<div class="speak-box"><span class="tag green">PRESENTER SCRIPT</span><p style="margin:0;">${d.speak}</p></div>`;
+    }
+
+    document.getElementById('fmsDetail').innerHTML = `
+      <h4 style="margin:0 0 8px; color:#38bdf8;">${d.title}</h4>
+      <div class="mode-switch">
+        <button class="mode-btn ${curFmsMode === 'kid' ? 'active' : ''}" onclick="setFmsMode('kid')">הסבר פשוט</button>
+        <button class="mode-btn ${curFmsMode === 'ste' ? 'active' : ''}" onclick="setFmsMode('ste')">STE-100</button>
+        <button class="mode-btn ${curFmsMode === 'speak' ? 'active' : ''}" onclick="setFmsMode('speak')">אנגלית לראיון</button>
+      </div>
+      ${bodyHtml}
+    `;
+  }
+  renderFmsDetail();
+
+  // ---------------- TAB 1: FMS CANVAS (CLOSED LOOP + SAS GUST) ----------------
+  const fmsCanvas = document.getElementById('fmsCanvas');
+  const mctx = fmsCanvas.getContext('2d');
+  let fmsFault = false, gustTimer = 0, fmsPulse = 0;
+
+  function triggerGust() {
+    gustTimer = 2.6;
+  }
+
+  function toggleFmsFault() {
+    fmsFault = !fmsFault;
+    document.getElementById('fmsFaultBtn').classList.toggle('danger-active', fmsFault);
+  }
+
+  function drawFmsCanvas() {
+    mctx.clearRect(0, 0, fmsCanvas.width, fmsCanvas.height);
+
+    mctx.fillStyle = '#9eb0d6';
+    mctx.font = 'bold 13px sans-serif';
+    mctx.textAlign = 'center';
+    mctx.fillText('המבנה המלא: חיישנים ← מחשב ניהול טיסה (מיקום / הנחיה / SAS) ← מודול סרוו ← כלי טיס', 330, 22);
+
+    // Sensor Module Box (Right side for RTL reading flow)
+    mctx.fillStyle = '#142645';
+    mctx.strokeStyle = fmsFault ? '#ef4444' : '#22c55e';
+    mctx.lineWidth = 2.5;
+    mctx.beginPath();
+    mctx.roundRect(450, 50, 190, 145, 12);
+    mctx.fill();
+    mctx.stroke();
+
+    mctx.fillStyle = '#f8fafc';
+    mctx.font = 'bold 13px sans-serif';
+    mctx.fillText('מודול חיישנים', 545, 73);
+    mctx.font = '12px sans-serif';
+    mctx.fillStyle = fmsFault ? '#fca5a5' : '#86efac';
+    mctx.fillText(fmsFault ? 'VGU ראשי: תקלה! (עובר לגיבוי)' : 'VGU (ג\'ירו אנכי: גלגול/עלרוד)', 545, 98);
+    mctx.fillStyle = '#cbd5e1';
+    mctx.fillText('FMU (מד שדה מגנטי — כיוון)', 545, 122);
+    mctx.fillText('GPS (מיקום לווייני במפה)', 545, 146);
+    mctx.fillText('ג\'ירו קצבים + נתוני אוויר', 545, 170);
+
+    // FMS Central Box (Middle)
+    mctx.fillStyle = '#0f294a';
+    mctx.strokeStyle = '#38bdf8';
+    mctx.lineWidth = 2.5;
+    mctx.beginPath();
+    mctx.roundRect(225, 45, 195, 165, 12);
+    mctx.fill();
+    mctx.stroke();
+
+    mctx.fillStyle = '#38bdf8';
+    mctx.font = 'bold 13px sans-serif';
+    mctx.fillText('FMS — המחשב המרכזי', 322, 68);
+
+    // 3 inner layers inside FMS
+    const layers = [
+      { y: 82,  t: '1. Position (איפה אני?)', c: '#1e3a8a' },
+      { y: 120, t: '2. Guidance (לאן לטוס?)', c: '#0369a1' },
+      { y: 158, t: '3. SAS (ייצוב מהיר לרוח)', c: gustTimer > 0 ? '#b45309' : '#0f766e' }
+    ];
+    layers.forEach(l => {
+      mctx.fillStyle = l.c;
+      mctx.beginPath();
+      mctx.roundRect(238, l.y, 169, 30, 6);
+      mctx.fill();
+      mctx.fillStyle = '#ffffff';
+      mctx.font = 'bold 11.5px sans-serif';
+      mctx.fillText(l.t, 322, l.y + 19);
+    });
+
+    // Servo Module Box (Left)
+    mctx.fillStyle = '#142645';
+    mctx.strokeStyle = '#f59e0b';
+    mctx.lineWidth = 2.5;
+    mctx.beginPath();
+    mctx.roundRect(20, 65, 170, 115, 12);
+    mctx.fill();
+    mctx.stroke();
+
+    mctx.fillStyle = '#fcd34d';
+    mctx.font = 'bold 13px sans-serif';
+    mctx.fillText('מודול הסרוו', 105, 92);
+    mctx.fillStyle = '#e2e8f0';
+    mctx.font = '12px sans-serif';
+    mctx.fillText('הופך פקודה לתנועה', 105, 118);
+    mctx.fillText('מאזנות + זנב V', 105, 140);
+    mctx.fillStyle = '#93c5fd';
+    mctx.fillText('משוב מיקום חזרה למחשב', 105, 164);
+
+    // Arrows between boxes
+    mctx.strokeStyle = '#38bdf8';
+    mctx.lineWidth = 2.5;
+    // Sensors -> FMS
+    mctx.beginPath(); mctx.moveTo(450, 122); mctx.lineTo(420, 122); mctx.stroke();
+    // FMS -> Servo
+    mctx.beginPath(); mctx.moveTo(225, 122); mctx.lineTo(190, 122); mctx.stroke();
+
+    // Bottom Live SAS Response Graph
+    mctx.fillStyle = '#091122';
+    mctx.strokeStyle = '#2a3b61';
+    mctx.lineWidth = 1.5;
+    mctx.beginPath();
+    mctx.roundRect(25, 232, 610, 140, 12);
+    mctx.fill();
+    mctx.stroke();
+
+    mctx.fillStyle = '#cbd5e1';
+    mctx.font = 'bold 12px sans-serif';
+    mctx.fillText('גרף תגובת הכלי בזמן אמת (תגובת הלולאה הפנימית — SAS)', 330, 254);
+
+    // Baseline
+    const gy = 312;
+    mctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    mctx.setLineDash([4, 4]);
+    mctx.beginPath(); mctx.moveTo(45, gy); mctx.lineTo(615, gy); mctx.stroke();
+    mctx.setLineDash([]);
+
+    // Draw aircraft attitude wave (damped oscillation if gust triggered!)
+    mctx.strokeStyle = gustTimer > 0 ? '#f59e0b' : '#22c55e';
+    mctx.lineWidth = 3;
+    mctx.beginPath();
+    for (let x = 0; x <= 570; x += 4) {
+      let yOff = 0;
+      if (gustTimer > 0) {
+        const t = (2.6 - gustTimer);
+        const env = Math.exp(-t * 2.1) * 38;
+        yOff = Math.sin(x * 0.045 - fmsPulse * 10) * env;
+      } else {
+        yOff = Math.sin(x * 0.03 + fmsPulse * 4) * 2.5;
+      }
+      if (x === 0) mctx.moveTo(45 + x, gy + yOff);
+      else mctx.lineTo(45 + x, gy + yOff);
+    }
+    mctx.stroke();
+
+    // Pulse dot traveling Sensors -> FMS -> Servo
+    const p = fmsPulse % 1;
+    const dotX = 545 - p * (545 - 105);
+    mctx.fillStyle = '#fde047';
+    mctx.beginPath();
+    mctx.arc(dotX, 122, 5, 0, Math.PI * 2);
+    mctx.fill();
+
+    // Update SAS status box
+    const sasBox = document.getElementById('sasStatusBox');
+    if (gustTimer > 0) {
+      sasBox.innerHTML = 'סטטוס ייצוב: <strong style="color:#fbbf24;">משב רוח פגע בכלי!</strong> ה-SAS מזהה את הקצב דרך הג\'ירו ומרסן מיד את התנודה דרך הסרוואים.';
+    } else if (fmsFault) {
+      sasBox.innerHTML = 'סטטוס ייצוב: <strong style="color:#fca5a5;">VGU ראשי בתקלה</strong> — המערכת עוברת אוטומטית לערוץ הגיבוי וממשיכה לטוס בבטחה.';
+    } else {
+      sasBox.innerHTML = 'סטטוס ייצוב: <strong style="color:#22c55e;">טיסה שקטה ויציבה</strong> — שלוש הקומות עובדות בהרמוניה.';
+    }
+  }
+
+  // ---------------- TAB 2: AERODYNAMICS PLAYGROUND ----------------
+  const aeroCanvas = document.getElementById('aeroCanvas');
+  const actx = aeroCanvas.getContext('2d');
+  let aRoll = 0, aPitch = 0, flowPhase = 0;
+
+  const aeroRollEl = document.getElementById('aeroRoll');
+  const aeroPitchEl = document.getElementById('aeroPitch');
+  aeroRollEl.addEventListener('input', () => { aRoll = +aeroRollEl.value; updateAeroSummary(); });
+  aeroPitchEl.addEventListener('input', () => { aPitch = +aeroPitchEl.value; updateAeroSummary(); });
+
+  function setAeroPreset(r, p) {
+    aRoll = r; aPitch = p;
+    aeroRollEl.value = r;
+    aeroPitchEl.value = p;
+    updateAeroSummary();
+  }
+
+  function updateAeroSummary() {
+    document.getElementById('aeroRollVal').textContent = aRoll + '°';
+    document.getElementById('aeroPitchVal').textContent = aPitch + '°';
+    const parts = [];
+    if (aRoll > 4) parts.push('מאזנת ימין עולה ודוחפת כנף ימין למטה, מאזנת שמאל יורדת ומרימה כנף שמאל ← <strong>המטוס פונה ימינה</strong>');
+    else if (aRoll < -4) parts.push('מאזנת שמאל עולה ודוחפת כנף שמאל למטה, מאזנת ימין יורדת ומרימה כנף ימין ← <strong>המטוס פונה שמאלה</strong>');
+    if (aPitch > 4) parts.push('זנב עולה למעלה ← דוחף זנב למטה ← <strong>האף עולה (טיפוס)</strong>');
+    else if (aPitch < -4) parts.push('זנב יורד למטה ← מרים זנב למעלה ← <strong>האף יורד (צלילה)</strong>');
+    document.getElementById('aeroSummary').innerHTML = parts.length
+      ? parts.join('<br>')
+      : 'מצב כרגע: <strong>טיסה ישרה ומאוזנת</strong> — שפות הזרימה ישרות והמטוס טס בקו ישר.';
+  }
+  updateAeroSummary();
+
+  // Draw an airfoil cross-section showing Leading Edge, Trailing Edge deflection, airflow & reaction force!
+  function drawAirfoilBox(x, y, w, h, title, deflDeg, wingReactionLabel) {
+    actx.save();
+    actx.fillStyle = '#0c162b';
+    actx.strokeStyle = '#2a3b61';
+    actx.lineWidth = 1.5;
+    actx.beginPath();
+    actx.roundRect(x, y, w, h, 10);
+    actx.fill();
+    actx.stroke();
+
+    actx.fillStyle = '#e2e8f0';
+    actx.font = 'bold 11.5px sans-serif';
+    actx.textAlign = 'center';
+    actx.fillText(title, x + w / 2, y + 17);
+
+    const cx = x + w / 2;
+    const cy = y + h * 0.56;
+
+    // Animated incoming air particles (left to right = Leading edge on left, Trailing edge on right)
+    actx.strokeStyle = 'rgba(56, 189, 248, 0.55)';
+    actx.lineWidth = 1.5;
+    for (let i = 0; i < 3; i++) {
+      const fy = cy - 16 + i * 16;
+      const offset = ((flowPhase * 60 + i * 25) % 45);
+      actx.beginPath();
+      actx.moveTo(x + 15 + offset, fy);
+      actx.lineTo(x + 32 + offset, fy);
+      actx.stroke();
+    }
+
+    // Airfoil fixed front body (Leading Edge on left -> hinge)
+    actx.fillStyle = '#475569';
+    actx.strokeStyle = '#94a3b8';
+    actx.lineWidth = 2;
+    actx.beginPath();
+    actx.moveTo(cx - 58, cy);
+    actx.quadraticCurveTo(cx - 35, cy - 16, cx + 18, cy - 6);
+    actx.lineTo(cx + 18, cy + 6);
+    actx.quadraticCurveTo(cx - 35, cy + 12, cx - 58, cy);
+    actx.closePath();
+    actx.fill();
+    actx.stroke();
+
+    // Hinged Trailing Edge (deflDeg > 0 means UP, < 0 means DOWN)
+    const rad = (-deflDeg * Math.PI) / 180; // canvas -y is UP
+    const tipX = cx + 18 + Math.cos(rad) * 42;
+    const tipY = cy + Math.sin(rad) * 42;
+
+    actx.strokeStyle = Math.abs(deflDeg) > 3 ? '#f59e0b' : '#cbd5e1';
+    actx.lineWidth = 6;
+    actx.lineCap = 'round';
+    actx.beginPath();
+    actx.moveTo(cx + 18, cy);
+    actx.lineTo(tipX, tipY);
+    actx.stroke();
+    actx.lineCap = 'butt';
+
+    // Labels for Leading & Trailing edges
+    actx.fillStyle = '#94a3b8';
+    actx.font = '10px sans-serif';
+    actx.fillText('שפת התקפה', cx - 44, cy + 25);
+    actx.fillText('שפת זרימה', cx + 38, cy + 25);
+
+    // Airflow deflection arrow + Opposite Wing Reaction arrow!
+    if (Math.abs(deflDeg) > 3) {
+      const airDir = deflDeg > 0 ? -1 : 1; // +deflDeg (UP) pushes air UP (-y)
+      // Blue arrow: Air pushed
+      drawArrow(actx, tipX + 6, tipY, tipX + 24, tipY + airDir * 18, '#38bdf8', 2.2);
+      // Green/Orange arrow: Opposite reaction force on wing/tail!
+      const reactDir = -airDir;
+      drawArrow(actx, cx - 10, cy, cx - 10, cy + reactDir * 30, '#22c55e', 3);
+
+      actx.fillStyle = '#86efac';
+      actx.font = 'bold 11px sans-serif';
+      actx.fillText(wingReactionLabel, x + w / 2, y + h - 8);
+    } else {
+      actx.fillStyle = '#64748b';
+      actx.font = '11px sans-serif';
+      actx.fillText('שפת זרימה ישרה (ללא דחיפה)', x + w / 2, y + h - 8);
+    }
+
+    actx.restore();
+  }
+
+  function drawAero() {
+    actx.clearRect(0, 0, aeroCanvas.width, aeroCanvas.height);
+
+    // Left panel: Rear View + Top-Down Path ("Where does the plane go?")
+    actx.fillStyle = '#9eb0d6';
+    actx.font = 'bold 12.5px sans-serif';
+    actx.textAlign = 'center';
+    actx.fillText('מבט מאחורי הכלי + כיוון הטיסה', 180, 22);
+
+    // Rear-view UAV banking & pitching
+    const ux = 180, uy = 115 - aPitch * 1.1;
+    const rollRad = (aRoll * Math.PI) / 180;
+
+    actx.save();
+    actx.translate(ux, uy);
+    actx.rotate(rollRad);
+
+    // Wings
+    actx.strokeStyle = '#cbd5e1';
+    actx.lineWidth = 7;
+    actx.beginPath();
+    actx.moveTo(-120, 0);
+    actx.lineTo(120, 0);
+    actx.stroke();
+
+    // V-Tail
+    actx.strokeStyle = '#60a5fa';
+    actx.lineWidth = 5;
+    actx.beginPath();
+    actx.moveTo(0, 4); actx.lineTo(-42, -32);
+    actx.moveTo(0, 4); actx.lineTo(42, -32);
+    actx.stroke();
+
+    // Fuselage
+    actx.fillStyle = '#334155';
+    actx.strokeStyle = '#e2e8f0';
+    actx.lineWidth = 2;
+    actx.beginPath();
+    actx.arc(0, 4, 13, 0, Math.PI * 2);
+    actx.fill();
+    actx.stroke();
+
+    // Lift arrows on Left & Right wings showing which wing rises/drops!
+    // Roll Right (+aRoll): Left wing goes UP (big arrow up), Right wing goes DOWN (arrow down)
+    if (Math.abs(aRoll) > 3) {
+      const leftUp = aRoll > 0;
+      drawArrow(actx, -85, 0, -85, leftUp ? -36 : 36, leftUp ? '#22c55e' : '#ef4444', 3);
+      drawArrow(actx, 85, 0, 85, leftUp ? 36 : -36, leftUp ? '#ef4444' : '#22c55e', 3);
+    }
+    actx.restore();
+
+    // Bottom-Left: Top-Down Turn Path View!
+    actx.fillStyle = '#0c162b';
+    actx.strokeStyle = '#2a3b61';
+    actx.lineWidth = 1.5;
+    actx.beginPath();
+    actx.roundRect(22, 200, 316, 194, 12);
+    actx.fill();
+    actx.stroke();
+
+    actx.fillStyle = '#e2e8f0';
+    actx.font = 'bold 12px sans-serif';
+    actx.fillText('מבט מלמעלה: לאיזה כיוון המטוס הולך?', 180, 222);
+
+    const sx = 180, sy = 368;
+    const curveEndX = sx + aRoll * 3.1;
+    const curveCtrlY = 290;
+
+    // Flight path dashed curve
+    actx.strokeStyle = '#38bdf8';
+    actx.lineWidth = 3.5;
+    actx.setLineDash([7, 5]);
+    actx.beginPath();
+    actx.moveTo(sx, sy);
+    actx.quadraticCurveTo(sx, curveCtrlY, curveEndX, 245);
+    actx.stroke();
+    actx.setLineDash([]);
+
+    // Arrowhead on path
+    drawArrow(actx, sx + aRoll * 1.4, 272, curveEndX, 245, '#38bdf8', 3);
+
+    // Mini UAV icon at start
+    actx.fillStyle = '#facc15';
+    actx.beginPath();
+    actx.moveTo(sx, sy - 12);
+    actx.lineTo(sx - 11, sy + 8);
+    actx.lineTo(sx + 11, sy + 8);
+    actx.closePath();
+    actx.fill();
+
+    // Big direction label
+    let dirTxt = 'טס ישר קדימה';
+    if (aRoll > 4) dirTxt = 'פונה ימינה ➡️';
+    else if (aRoll < -4) dirTxt = '⬅️ פונה שמאלה';
+    if (aPitch > 4) dirTxt += ' + מטפס ⬆️';
+    else if (aPitch < -4) dirTxt += ' + צולל ⬇️';
+
+    actx.fillStyle = '#fde047';
+    actx.font = 'bold 13px sans-serif';
+    actx.fillText(dirTxt, 180, 386);
+
+    // Right side: 3 Stacked Airfoil Cross-Sections!
+    // Roll Right (+aRoll): Left Aileron DOWN (-aRoll), Right Aileron UP (+aRoll)
+    const leftAilDeg = -aRoll;
+    const rightAilDeg = aRoll;
+    const tailDeg = aPitch;
+
+    drawAirfoilBox(
+      355, 16, 290, 118,
+      'מאזנת שמאל (שפת זרימה)',
+      leftAilDeg,
+      leftAilDeg < -3 ? 'הגה יורד ← כנף שמאל עולה ⬆️' : 'הגה עולה ← כנף שמאל יורדת ⬇️'
+    );
+    drawAirfoilBox(
+      355, 146, 290, 118,
+      'מאזנת ימין (שפת זרימה)',
+      rightAilDeg,
+      rightAilDeg > 3 ? 'הגה עולה ← כנף ימין יורדת ⬇️' : 'הגה יורד ← כנף ימין עולה ⬆️'
+    );
+    drawAirfoilBox(
+      355, 276, 290, 118,
+      'הגה זנב V (ציר עלרוד)',
+      tailDeg,
+      tailDeg > 3 ? 'זנב עולה ← זנב נדחף למטה ← אף עולה ⬆️' : 'זנב יורד ← זנב עולה ← אף יורד ⬇️'
+    );
+  }
+
+  // ---------------- TAB 3: VGU CANVAS (FROM V2.1) ----------------
   const vguCanvas = document.getElementById('vguCanvas');
   const vctx = vguCanvas.getContext('2d');
-  let vRoll = 0, vPitch = 0, turnActive = false, rotorSpinPhase = 0;
+  let vRoll = 0, vPitch = 0, turnActive = false, noCutOutMode = false;
+  let rotorSpinPhase = 0, gyroError = 0;
 
   const vguRollEl = document.getElementById('vguRoll');
   const vguPitchEl = document.getElementById('vguPitch');
@@ -494,514 +998,259 @@
 
   function toggleTurn() {
     turnActive = !turnActive;
-    const btn = document.getElementById('turnBtn');
-    btn.classList.toggle('warn-active', turnActive);
-    if (turnActive && Math.abs(vRoll) < 12) {
-      vRoll = 22;
-      vguRollEl.value = 22;
+    document.getElementById('turnBtn').classList.toggle('warn-active', turnActive);
+    if (turnActive && Math.abs(vRoll) < 15) { vRoll = 26; vguRollEl.value = 26; }
+    updateVguStatus();
+  }
+
+  function toggleNoCutOut() {
+    noCutOutMode = !noCutOutMode;
+    document.getElementById('noCutOutBtn').classList.toggle('danger-active', noCutOutMode);
+    if (noCutOutMode && !turnActive) {
+      turnActive = true;
+      document.getElementById('turnBtn').classList.add('warn-active');
+      if (Math.abs(vRoll) < 15) { vRoll = 28; vguRollEl.value = 28; }
     }
     updateVguStatus();
   }
 
   function resetVgu() {
-    vRoll = 0; vPitch = 0; turnActive = false;
+    vRoll = 0; vPitch = 0; turnActive = false; noCutOutMode = false; gyroError = 0;
     vguRollEl.value = 0; vguPitchEl.value = 0;
     document.getElementById('turnBtn').classList.remove('warn-active');
+    document.getElementById('noCutOutBtn').classList.remove('danger-active');
     updateVguStatus();
   }
 
   function updateVguStatus() {
     document.getElementById('vguRollVal').textContent = vRoll + '°';
     document.getElementById('vguPitchVal').textContent = vPitch + '°';
-    const cutOut = turnActive || Math.abs(vRoll) > 7;
-    const box = document.getElementById('vguStatusBox');
-    if (cutOut) {
-      box.innerHTML = 'מצב מערכת זקיפה: <strong style="color:#fbbf24;">ניתוק זקיפה פעיל (Erection Cut-Out)!</strong> — בפנייה/הטיה מעל 7°, המערכת מנתקת את תיקון הכבידה כדי שכוח הצנטריפוגה לא ישקר לג\'ירו.';
+    const cutOutActive = !noCutOutMode && (turnActive || Math.abs(vRoll) > 7);
+    const measureCard = document.getElementById('measureCard');
+    const erectionCard = document.getElementById('erectionCard');
+    const shownRoll = Math.round(vRoll - gyroError);
+
+    if (noCutOutMode && Math.abs(gyroError) > 2) {
+      measureCard.className = 'status-card danger';
+      document.getElementById('measureText').innerHTML = `קורא ${shownRoll}° במקום ${vRoll}° — כי הג'ירו נמשך לשגיאה!`;
     } else {
-      box.innerHTML = 'מצב מערכת זקיפה: <strong style="color:#22c55e;">זקיפה פעילה</strong> — המטוס ישר יחסית, והמערכת מתקנת בעדינות סחיפה (Drift) לכיוון כדור הארץ.';
+      measureCard.className = 'status-card';
+      document.getElementById('measureText').innerHTML = `פעיל תמיד — מודד ${shownRoll}° גלגול ו-${vPitch}° עלרוד.`;
     }
+
+    if (noCutOutMode && (turnActive || Math.abs(vRoll) > 7)) {
+      erectionCard.className = 'status-card danger';
+      document.getElementById('erectionText').innerHTML = 'תקלה (מחובר בפנייה) — כוח ג\'י מושך את הסביבון!';
+    } else if (cutOutActive) {
+      erectionCard.className = 'status-card warn';
+      document.getElementById('erectionText').innerHTML = 'מנותק זמנית (Cut-Out) — הסביבון מוגן!';
+    } else {
+      erectionCard.className = 'status-card';
+      document.getElementById('erectionText').innerHTML = 'פעיל — מיישר בעדינות סחיפה איטית.';
+    }
+  }
+
+  function drawArrow(c, x1, y1, x2, y2, color, width = 2.5) {
+    const head = 7;
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    c.strokeStyle = color;
+    c.fillStyle = color;
+    c.lineWidth = width;
+    c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke();
+    c.beginPath();
+    c.moveTo(x2, y2);
+    c.lineTo(x2 - head * Math.cos(ang - 0.5), y2 - head * Math.sin(ang - 0.5));
+    c.lineTo(x2 - head * Math.cos(ang + 0.5), y2 - head * Math.sin(ang + 0.5));
+    c.closePath();
+    c.fill();
   }
 
   function drawVgu() {
     vctx.clearRect(0, 0, vguCanvas.width, vguCanvas.height);
-
-    // Titles
     vctx.fillStyle = '#9eb0d6';
     vctx.font = 'bold 13px sans-serif';
     vctx.textAlign = 'center';
-    vctx.fillText('אופק מלאכותי (מה המפעיל/מחשב רואה)', 155, 24);
-    vctx.fillText('בתוך קופסת ה-VGU (הקופסה נוטה, הסביבון ישר)', 455, 24);
+    vctx.fillText('אופק מלאכותי', 158, 22);
+    vctx.fillText('בתוך יחידת ה-VGU', 470, 22);
 
-    // --- LEFT: ARTIFICIAL HORIZON BALL ---
-    const hx = 155, hy = 175, hr = 112;
+    const displayedRoll = vRoll - gyroError;
+    const hx = 158, hy = 178, hr = 110;
     vctx.save();
-    vctx.beginPath();
-    vctx.arc(hx, hy, hr, 0, Math.PI * 2);
-    vctx.clip();
-
+    vctx.beginPath(); vctx.arc(hx, hy, hr, 0, Math.PI * 2); vctx.clip();
     vctx.translate(hx, hy);
-    vctx.rotate((-vRoll * Math.PI) / 180);
+    vctx.rotate((-displayedRoll * Math.PI) / 180);
     const pitchPx = vPitch * 2.2;
-
-    // Sky
-    vctx.fillStyle = '#0284c7';
-    vctx.fillRect(-200, -250 + pitchPx, 400, 250);
-    // Ground
-    vctx.fillStyle = '#78350f';
-    vctx.fillRect(-200, pitchPx, 400, 250);
-    // Horizon line
-    vctx.strokeStyle = '#ffffff';
-    vctx.lineWidth = 3;
-    vctx.beginPath();
-    vctx.moveTo(-200, pitchPx);
-    vctx.lineTo(200, pitchPx);
-    vctx.stroke();
-
-    // Pitch ladder lines
-    vctx.strokeStyle = 'rgba(255,255,255,0.75)';
-    vctx.lineWidth = 1.5;
-    [-20, -10, 10, 20].forEach(deg => {
-      const ly = pitchPx - deg * 2.2;
-      vctx.beginPath();
-      vctx.moveTo(-28, ly);
-      vctx.lineTo(28, ly);
-      vctx.stroke();
-    });
+    vctx.fillStyle = '#0284c7'; vctx.fillRect(-200, -250 + pitchPx, 400, 250);
+    vctx.fillStyle = '#78350f'; vctx.fillRect(-200, pitchPx, 400, 250);
+    vctx.strokeStyle = '#ffffff'; vctx.lineWidth = 3;
+    vctx.beginPath(); vctx.moveTo(-200, pitchPx); vctx.lineTo(200, pitchPx); vctx.stroke();
     vctx.restore();
 
-    // Horizon ring + Fixed aircraft symbol
-    vctx.beginPath();
-    vctx.arc(hx, hy, hr, 0, Math.PI * 2);
-    vctx.strokeStyle = '#475569';
-    vctx.lineWidth = 5;
-    vctx.stroke();
+    vctx.beginPath(); vctx.arc(hx, hy, hr, 0, Math.PI * 2);
+    vctx.strokeStyle = '#475569'; vctx.lineWidth = 5; vctx.stroke();
 
-    vctx.strokeStyle = '#facc15';
-    vctx.lineWidth = 4;
+    vctx.strokeStyle = '#facc15'; vctx.lineWidth = 4;
     vctx.beginPath();
-    vctx.moveTo(hx - 38, hy);
-    vctx.lineTo(hx - 12, hy);
-    vctx.lineTo(hx, hy + 8);
-    vctx.lineTo(hx + 12, hy);
-    vctx.lineTo(hx + 38, hy);
-    vctx.stroke();
+    vctx.moveTo(hx - 34, hy); vctx.lineTo(hx - 10, hy); vctx.lineTo(hx, hy + 8);
+    vctx.lineTo(hx + 10, hy); vctx.lineTo(hx + 34, hy); vctx.stroke();
 
-    // --- RIGHT: INSIDE VGU ---
-    const gx = 455, gy = 175;
+    const gx = 470, gy = 165;
     const rollRad = (vRoll * Math.PI) / 180;
+    const errRad = (gyroError * Math.PI) / 180;
 
-    // Outer casing tilts with aircraft
     vctx.save();
     vctx.translate(gx, gy);
     vctx.rotate(rollRad);
-    vctx.fillStyle = '#16233d';
-    vctx.strokeStyle = '#38bdf8';
-    vctx.lineWidth = 3;
-    vctx.beginPath();
-    vctx.roundRect(-95, -95, 190, 190, 22);
-    vctx.fill();
-    vctx.stroke();
-
-    // Housing top arrow ("Aircraft Up")
-    vctx.fillStyle = '#38bdf8';
-    vctx.font = 'bold 11px sans-serif';
-    vctx.fillText('קופסה (זזה עם המטוס)', 0, -76);
+    vctx.fillStyle = '#142038'; vctx.strokeStyle = '#38bdf8'; vctx.lineWidth = 2.5;
+    vctx.beginPath(); vctx.roundRect(-92, -92, 184, 184, 22); vctx.fill(); vctx.stroke();
     vctx.restore();
 
-    // Inner Gimbal & Spinning Gyro Rotor stay VERTICAL (Rigidity in Space!)
     vctx.save();
     vctx.translate(gx, gy);
-    // Vertical reference axis
-    vctx.setLineDash([4, 4]);
-    vctx.strokeStyle = 'rgba(34, 197, 94, 0.55)';
-    vctx.beginPath();
-    vctx.moveTo(0, -110);
-    vctx.lineTo(0, 110);
-    vctx.stroke();
-    vctx.setLineDash([]);
+    vctx.rotate(errRad);
+    vctx.strokeStyle = '#94a3b8'; vctx.lineWidth = 2.5;
+    vctx.beginPath(); vctx.arc(0, 0, 56, 0, Math.PI * 2); vctx.stroke();
+    vctx.strokeStyle = '#e2e8f0'; vctx.lineWidth = 3.5;
+    vctx.beginPath(); vctx.moveTo(0, -48); vctx.lineTo(0, 48); vctx.stroke();
 
-    // Outer gimbal ring
-    vctx.strokeStyle = '#94a3b8';
-    vctx.lineWidth = 3;
-    vctx.beginPath();
-    vctx.arc(0, 0, 56, 0, Math.PI * 2);
-    vctx.stroke();
-
-    // Gyro Rotor flywheel (horizontal heavy disk spinning around vertical axis)
-    vctx.fillStyle = '#f59e0b';
-    vctx.strokeStyle = '#fef08a';
-    vctx.lineWidth = 2;
-    vctx.beginPath();
-    vctx.roundRect(-42, -11 + vPitch * 0.4, 84, 22, 8);
-    vctx.fill();
-    vctx.stroke();
-
-    // Spinning highlight stripe
-    const sx = Math.sin(rotorSpinPhase) * 34;
-    vctx.fillStyle = '#78350f';
-    vctx.fillRect(sx - 5, -9 + vPitch * 0.4, 10, 18);
-
-    // Vertical axle
-    vctx.strokeStyle = '#e2e8f0';
-    vctx.lineWidth = 4;
-    vctx.beginPath();
-    vctx.moveTo(0, -45);
-    vctx.lineTo(0, 45);
-    vctx.stroke();
-
-    // Erection Cut-Out badge or active badge
-    const cutOut = turnActive || Math.abs(vRoll) > 7;
-    if (cutOut) {
-      vctx.fillStyle = 'rgba(245, 158, 11, 0.22)';
-      vctx.strokeStyle = '#f59e0b';
-      vctx.lineWidth = 1.5;
-      vctx.beginPath();
-      vctx.roundRect(-78, 108, 156, 26, 6);
-      vctx.fill();
-      vctx.stroke();
-      vctx.fillStyle = '#fcd34d';
-      vctx.font = 'bold 11px sans-serif';
-      vctx.fillText('CUT-OUT: תיקון זקיפה מנותק', 0, 125);
-
-      if (turnActive) {
-        // Show false centrifugal pull arrow
-        vctx.strokeStyle = '#ef4444';
-        vctx.lineWidth = 2;
-        vctx.beginPath();
-        vctx.moveTo(0, 45);
-        vctx.lineTo(35, 78);
-        vctx.stroke();
-        vctx.fillStyle = '#fca5a5';
-        vctx.font = '11px sans-serif';
-        vctx.fillText('כוח צנטריפוגלי מטעה', 55, 88);
+    const fy = vPitch * 0.35;
+    const grad = vctx.createLinearGradient(-46, fy, 46, fy);
+    grad.addColorStop(0, '#b45309'); grad.addColorStop(0.5, '#fbbf24'); grad.addColorStop(1, '#b45309');
+    vctx.fillStyle = grad; vctx.strokeStyle = '#fef08a'; vctx.lineWidth = 2;
+    vctx.beginPath(); vctx.ellipse(0, fy, 46, 13, 0, 0, Math.PI * 2); vctx.fill(); vctx.stroke();
+    for (let i = 0; i < 3; i++) {
+      const a = rotorSpinPhase + (i * Math.PI * 2) / 3;
+      if (Math.sin(a) >= 0) {
+        vctx.fillStyle = 'rgba(255,255,255,0.75)';
+        vctx.beginPath(); vctx.arc(Math.cos(a) * 40, fy + Math.sin(a) * 10, 3, 0, Math.PI * 2); vctx.fill();
       }
-    } else {
-      vctx.fillStyle = 'rgba(34, 197, 94, 0.2)';
-      vctx.strokeStyle = '#22c55e';
-      vctx.lineWidth = 1.5;
-      vctx.beginPath();
-      vctx.roundRect(-74, 108, 148, 26, 6);
-      vctx.fill();
-      vctx.stroke();
-      vctx.fillStyle = '#86efac';
-      vctx.font = 'bold 11px sans-serif';
-      vctx.fillText('זקיפה פעילה (ננעל לכבידה)', 0, 125);
     }
+    vctx.restore();
+
+    const apparentAngle = turnActive ? rollRad : 0;
+    const px = -Math.sin(apparentAngle) * 35;
+    const py = Math.cos(apparentAngle) * 35;
+    vctx.save();
+    vctx.translate(gx, gy + 26);
+    vctx.strokeStyle = turnActive ? '#f87171' : '#4ade80'; vctx.lineWidth = 2.5;
+    vctx.beginPath(); vctx.moveTo(0, 0); vctx.lineTo(px, py); vctx.stroke();
+    vctx.fillStyle = turnActive ? '#ef4444' : '#22c55e';
+    vctx.beginPath(); vctx.arc(px, py, 5, 0, Math.PI * 2); vctx.fill();
     vctx.restore();
   }
 
-  // ---------------- TAB 2: FLIGHT CONTROL & V-TAIL ----------------
-  const fcCanvas = document.getElementById('fcCanvas');
-  const fctx = fcCanvas.getContext('2d');
-  let fPitch = 0, fRoll = 0, fYaw = 0, sensorFault = false, pulsePhase = 0;
-
-  ['fcPitch', 'fcRoll', 'fcYaw'].forEach(id => {
-    document.getElementById(id).addEventListener('input', () => {
-      fPitch = +document.getElementById('fcPitch').value;
-      fRoll = +document.getElementById('fcRoll').value;
-      fYaw = +document.getElementById('fcYaw').value;
-      document.getElementById('fcPitchVal').textContent = fPitch + '%';
-      document.getElementById('fcRollVal').textContent = fRoll + '%';
-      document.getElementById('fcYawVal').textContent = fYaw + '%';
-      updateReadout();
-    });
-  });
-
-  function toggleSensorFault() {
-    sensorFault = !sensorFault;
-    document.getElementById('faultBtn').classList.toggle('danger-active', sensorFault);
-  }
-
-  function resetFc() {
-    fPitch = 0; fRoll = 0; fYaw = 0;
-    ['fcPitch', 'fcRoll', 'fcYaw'].forEach(id => document.getElementById(id).value = 0);
-    ['fcPitchVal', 'fcRollVal', 'fcYawVal'].forEach(id => document.getElementById(id).textContent = '0%');
-    updateReadout();
-  }
-
-  function clamp(v, mn, mx) { return Math.max(mn, Math.min(mx, v)); }
-
-  function updateReadout() {
-    // Aerodynamics (Rear View):
-    // Pitch Up (+) -> Both V-tail surfaces UP (+)
-    // Yaw Right (+) -> Left V-tail UP (+), Right V-tail DOWN (-)
-    // Roll Right (+) -> Left Aileron DOWN (-), Right Aileron UP (+)
-    const leftV = clamp(fPitch + fYaw, -100, 100);
-    const rightV = clamp(fPitch - fYaw, -100, 100);
-    const leftAil = -fRoll;
-    const rightAil = fRoll;
-
-    const fmt = v => v > 5 ? `למעלה (${Math.round(v)}%)` : v < -5 ? `למטה (${Math.round(-v)}%)` : 'ניטרלי';
-
-    document.getElementById('surfaceReadout').innerHTML = `
-      <div class="readout-item"><strong>משטח זנב V שמאל:</strong> <span style="color:#38bdf8">${fmt(leftV)}</span></div>
-      <div class="readout-item"><strong>משטח זנב V ימין:</strong> <span style="color:#38bdf8">${fmt(rightV)}</span></div>
-      <div class="readout-item"><strong>מאזנת שמאל:</strong> <span style="color:#fbbf24">${fmt(leftAil)}</span></div>
-      <div class="readout-item"><strong>מאזנת ימין:</strong> <span style="color:#fbbf24">${fmt(rightAil)}</span></div>
-    `;
-  }
-  updateReadout();
-
-  function drawFc() {
-    fctx.clearRect(0, 0, fcCanvas.width, fcCanvas.height);
-
-    // --- TOP HALF: REAR VIEW OF UAV + SURFACES ---
-    const ux = 310, uy = 115;
-    fctx.fillStyle = '#9eb0d6';
-    fctx.font = 'bold 13px sans-serif';
-    fctx.textAlign = 'center';
-    fctx.fillText('מבט מאחורי הכטמ"מ: תזוזת משטחי היגוי וזנב V בזמן אמת', ux, 22);
-
-    const leftV = clamp(fPitch + fYaw, -100, 100);
-    const rightV = clamp(fPitch - fYaw, -100, 100);
-    const leftAil = -fRoll;
-    const rightAil = fRoll;
-
-    // Wings
-    fctx.strokeStyle = '#94a3b8';
-    fctx.lineWidth = 8;
-    fctx.beginPath();
-    fctx.moveTo(ux - 180, uy);
-    fctx.lineTo(ux + 180, uy);
-    fctx.stroke();
-
-    // Ailerons (outer wings)
-    function drawFlapIndicator(x, y, val, label) {
-      const dy = -(val / 100) * 20; // positive = UP
-      fctx.strokeStyle = Math.abs(val) > 5 ? '#f59e0b' : '#475569';
-      fctx.lineWidth = 6;
-      fctx.beginPath();
-      fctx.moveTo(x - 28, y);
-      fctx.lineTo(x + 28, y);
-      fctx.stroke();
-
-      if (Math.abs(val) > 5) {
-        fctx.fillStyle = '#fbbf24';
-        fctx.beginPath();
-        fctx.arc(x, y + dy, 6, 0, Math.PI * 2);
-        fctx.fill();
-        fctx.strokeStyle = '#fbbf24';
-        fctx.lineWidth = 2;
-        fctx.beginPath();
-        fctx.moveTo(x, y);
-        fctx.lineTo(x, y + dy);
-        fctx.stroke();
-      }
-      fctx.fillStyle = '#cbd5e1';
-      fctx.font = '11px sans-serif';
-      fctx.fillText(label, x, y + 28);
-    }
-
-    drawFlapIndicator(ux - 135, uy, leftAil, 'מאזנת שמאל');
-    drawFlapIndicator(ux + 135, uy, rightAil, 'מאזנת ימין');
-
-    // V-Tail Fins
-    fctx.strokeStyle = '#60a5fa';
-    fctx.lineWidth = 7;
-    fctx.beginPath();
-    fctx.moveTo(ux, uy + 10);
-    fctx.lineTo(ux - 70, uy - 52);
-    fctx.moveTo(ux, uy + 10);
-    fctx.lineTo(ux + 70, uy - 52);
-    fctx.stroke();
-
-    // V-Tail Ruddervator Indicators
-    function drawVIndicator(x, y, val, side) {
-      const dy = -(val / 100) * 18;
-      if (Math.abs(val) > 5) {
-        fctx.strokeStyle = '#38bdf8';
-        fctx.lineWidth = 3;
-        fctx.beginPath();
-        fctx.moveTo(x, y);
-        fctx.lineTo(x, y + dy);
-        fctx.stroke();
-        fctx.fillStyle = '#38bdf8';
-        fctx.beginPath();
-        fctx.arc(x, y + dy, 6, 0, Math.PI * 2);
-        fctx.fill();
-      }
-      fctx.fillStyle = '#93c5fd';
-      fctx.font = 'bold 11px sans-serif';
-      fctx.fillText(side, x + (side.includes('שמאל') ? -38 : 38), y - 24);
-    }
-    drawVIndicator(ux - 52, uy - 38, leftV, 'זנב שמאל');
-    drawVIndicator(ux + 52, uy - 38, rightV, 'זנב ימין');
-
-    // Fuselage Center
-    fctx.fillStyle = '#334155';
-    fctx.strokeStyle = '#cbd5e1';
-    fctx.lineWidth = 2;
-    fctx.beginPath();
-    fctx.arc(ux, uy + 8, 18, 0, Math.PI * 2);
-    fctx.fill();
-    fctx.stroke();
-
-    // --- BOTTOM HALF: CLOSED-LOOP ARCHITECTURE ---
-    const ly = 248;
-    fctx.fillStyle = '#9eb0d6';
-    fctx.font = 'bold 13px sans-serif';
-    fctx.fillText('החוג הסגור (Closed-Loop Control) + יתירות חיישנים', 310, 206);
-
-    const nodes = [
-      { x: 525, y: ly, w: 120, h: 46, t: 'פקודה (מפעיל/מסלול)', c: '#1e3a8a' },
-      { x: 380, y: ly, w: 125, h: 46, t: 'מחשב טיסה (FCC)', c: '#0369a1' },
-      { x: 225, y: ly, w: 125, h: 46, t: 'סרוואים והגאים', c: '#0f766e' },
-      { x: 85,  y: ly, w: 115, h: 46, t: 'תנועת הכטמ"מ', c: '#334155' }
-    ];
-
-    // Forward arrows (Right to Left for RTL flow!)
-    fctx.strokeStyle = '#38bdf8';
-    fctx.lineWidth = 2.5;
-    for (let i = 0; i < nodes.length - 1; i++) {
-      fctx.beginPath();
-      fctx.moveTo(nodes[i].x - nodes[i].w / 2, ly);
-      fctx.lineTo(nodes[i + 1].x + nodes[i + 1].w / 2, ly);
-      fctx.stroke();
-    }
-
-    // Feedback Loop (Sensors at bottom)
-    const sy = 335;
-    fctx.strokeStyle = sensorFault ? '#f59e0b' : '#22c55e';
-    fctx.lineWidth = 2.5;
-    fctx.beginPath();
-    fctx.moveTo(85, ly + 23);
-    fctx.lineTo(85, sy);
-    fctx.lineTo(380, sy);
-    fctx.lineTo(380, ly + 23);
-    fctx.stroke();
-
-    // Animated pulse dot along loop
-    const p = pulsePhase % 1;
-    let px, py;
-    if (p < 0.5) {
-      // Forward top line (525 -> 85)
-      px = 525 - (p / 0.5) * (525 - 85);
-      py = ly;
-    } else {
-      // Feedback bottom line (85 -> 380)
-      px = 85 + ((p - 0.5) / 0.5) * (380 - 85);
-      py = sy;
-    }
-    fctx.fillStyle = '#fde047';
-    fctx.beginPath();
-    fctx.arc(px, py, 5, 0, Math.PI * 2);
-    fctx.fill();
-
-    // Draw forward boxes
-    nodes.forEach(n => {
-      fctx.fillStyle = n.c;
-      fctx.strokeStyle = '#60a5fa';
-      fctx.lineWidth = 1.5;
-      fctx.beginPath();
-      fctx.roundRect(n.x - n.w / 2, n.y - n.h / 2, n.w, n.h, 8);
-      fctx.fill();
-      fctx.stroke();
-      fctx.fillStyle = '#f8fafc';
-      fctx.font = 'bold 11px sans-serif';
-      fctx.fillText(n.t, n.x, n.y + 4);
-    });
-
-    // Draw Sensor Boxes (Primary VGU + Backup VGU)
-    fctx.fillStyle = sensorFault ? '#7f1d1d' : '#14532d';
-    fctx.strokeStyle = sensorFault ? '#ef4444' : '#22c55e';
-    fctx.beginPath();
-    fctx.roundRect(145, sy - 22, 175, 44, 8);
-    fctx.fill();
-    fctx.stroke();
-    fctx.fillStyle = '#ffffff';
-    fctx.font = 'bold 11px sans-serif';
-    fctx.fillText(
-      sensorFault ? 'VGU ראשי: תקלה! עובר לגיבוי 2' : 'חיישנים: VGU ראשי + ג\'ירו קצבים',
-      232, sy + 4
-    );
-  }
-
-  // Main Animation Loop
+  // ---------------- MAIN ANIMATION LOOP ----------------
   let lastT = 0;
-  function loop(ts) {
+  function mainLoop(ts) {
     if (!lastT) lastT = ts;
     const dt = (ts - lastT) / 1000;
     lastT = ts;
-    rotorSpinPhase += dt * 12;
-    pulsePhase += dt * 0.45;
-    drawVgu();
-    drawFc();
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
 
-  // ---------------- TAB 3: INTERVIEW Q&A SIMULATOR ----------------
+    fmsPulse += dt * 0.45;
+    flowPhase += dt;
+    rotorSpinPhase += dt * 3.8;
+    if (gustTimer > 0) gustTimer = Math.max(0, gustTimer - dt);
+
+    if (noCutOutMode && (turnActive || Math.abs(vRoll) > 7)) {
+      gyroError += (vRoll * 0.85 - gyroError) * Math.min(1, dt * 0.55);
+      updateVguStatus();
+    } else if (Math.abs(gyroError) > 0.05) {
+      gyroError += (0 - gyroError) * Math.min(1, dt * 1.6);
+      updateVguStatus();
+    } else {
+      gyroError = 0;
+    }
+
+    drawFmsCanvas();
+    drawAero();
+    drawVgu();
+    requestAnimationFrame(mainLoop);
+  }
+  updateVguStatus();
+  requestAnimationFrame(mainLoop);
+
+  // ---------------- TAB 4: INTERVIEW Q&A ----------------
   const qaList = [
     {
-      q: 'חניך שואל באמצע השיעור: "למה צריך ניתוק זקיפה (Erection Cut-Out) בג\'ירו האנכי?" מה התשובה המדויקת?',
+      q: 'מה ההבדל בין Guidance (הנחיה) לבין SAS (הגברת יציבות) בתוך ה-FMS?',
       opts: [
-        'כדי לחסוך חשמל בזמן טיסה ישרה.',
-        'כי בפנייה או בהאצה, כוח צנטריפוגלי מרגיש כמו כוח הכבידה ומנסה להטות את הסביבון לאנך שגוי — לכן מנתקים זמנית את היישור.',
-        'כי הסביבון מפסיק להסתובב מעל 10 מעלות הטיה.'
+        'אין הבדל, שתיהן עושות את אותה עבודה.',
+        'Guidance מנהל את הנתיב לנקודת הציון (לולאה חיצונית), ו-SAS מגיב בשבריר שנייה למשבי רוח ונדנודים כדי לייצב את הכלי (לולאה פנימית).',
+        'SAS אחראי על תקשורת GPS בלבד.'
       ],
       ans: 1,
-      heExp: 'מצוין! זו אחת השאלות הכי אהובות בראיונות על VGU.',
-      enAns: '"During a turn or acceleration, centrifugal force shifts the apparent vertical. Erection Cut-Out temporarily disables leveling so the gyro does not precess to a false horizon."'
+      heExp: 'מדויק! זו ההפרדה הקלאסית בין לולאה חיצונית (ניווט/נתיב) ללולאה פנימית מהירה (ייצוב).',
+      enAns: '"Guidance manages the outer loop to follow waypoints, while SAS works rapidly in the inner loop to damp turbulence and keep the aircraft smooth."'
     },
     {
-      q: 'מה ההבדל בין ג\'ירו אנכי (VGU) לבין ג\'ירו קצבים (Rate Gyro) בבקרת הטיסה?',
+      q: 'מה תפקידו של ה-FMU בתוך מודול החיישנים לצד ה-VGU וה-GPS?',
       opts: [
-        'VGU מודד זווית ביחס לאופק (כמה המטוס נטה), וג\'ירו קצבים מודד מהירות סיבוב (כמה מהר הוא מסתובב בשנייה).',
-        'אין הבדל, אלו שני שמות לאותו חיישן.',
-        'VGU מודד רק מהירות אוויר וגובה.'
+        'למדוד את השדה המגנטי של כדור הארץ כדי לתת כיוון מצפן (Heading) לכלי.',
+        'להזריק דלק למנוע.',
+        'להוריד את הגלגלים בנחיתה.'
       ],
       ans: 0,
-      heExp: 'בול! המחשב צריך גם לדעת באיזו זווית המטוס נמצא (VGU) וגם כמה מהר הוא זז אליה כדי לבלום נדנודים (Rate Gyro).',
-      enAns: '"The VGU measures attitude angles (Pitch and Roll), while a Rate Gyro measures angular velocity—how fast the aircraft is rotating per second."'
+      heExp: 'בדיוק! מד שדה מגנטי (Fluxgate Magnetometer Unit) משלים את נתוני האופק והמיקום בנתון כיוון מגנטי אמין.',
+      enAns: '"The FMU measures Earth\'s magnetic field to provide reliable magnetic heading to the flight management system."'
     },
     {
-      q: 'בזנב V, אם המפעיל מושך אחורה להרמת אף (Pitch Up) ובמקביל נותן הגה כיוון ימינה (Yaw Right) — מה קורה למשטחים?',
+      q: 'אם הטייס או מחשב הטיסה רוצה לפנות ימינה — מה קורה לשתי המאזנות בשפת הזרימה?',
       opts: [
-        'שניהם נשארים במקום כי הפקודות מבטלות זו את זו.',
-        'המיקסר מחבר את הפקודות: משטח שמאל עולה יותר חזק למעלה, ומשטח ימין מתקזז לפי ההפרש.',
-        'רק המאזנות בכנף זזות.'
+        'שתי המאזנות עולות למעלה יחד.',
+        'מאזנת ימין עולה למעלה (מורידה את כנף ימין), ומאזנת שמאל יורדת למטה (מרימה את כנף שמאל).',
+        'מאזנת ימין יורדת למטה ומאזנת שמאל נשארת ישרה.'
       ],
       ans: 1,
-      heExp: 'נכון מאוד! זה הרעיון של V-Tail Mixer — חיבור ליניארי בין פקודת העלרוד (משותפת) לפקודת הסבסוב (דיפרנציאלית).',
-      enAns: '"The V-tail mixer combines both commands: symmetrical deflection controls Pitch, and differential deflection controls Yaw."'
+      heExp: 'בול! מאזנות תמיד פועלות באופן מנוגד לפי עיקרון שפת הזרימה.',
+      enAns: '"To roll right, the right aileron deflects up to push the right wing down, while the left aileron deflects down to lift the left wing."'
     },
     {
-      q: 'מה המשמעות של "חוג סגור" (Closed-Loop) בבקרת טיסה?',
+      q: 'למה משמש חיישן המיקום הפנימי בתוך מודול הסרוו?',
       opts: [
-        'שהכטמ"מ טס רק במעגלים סגורים מעל הבסיס.',
-        'שהמערכת מודדת כל הזמן את התוצאה דרך חיישנים ומשווה אותה לפקודה כדי לתקן שגיאות אוטומטית.',
-        'שהדלק זורם במעגל סגור בלי משאבה.'
-      ],
-      ans: 1,
-      heExp: 'מדויק! בלי משוב מהחיישנים (VGU וכו\'), רוח צד הייתה מטה את הכלי והמחשב לא היה יודע לתקן.',
-      enAns: '"Closed-loop control means the computer continuously checks sensor feedback against the target attitude and adjusts the surfaces to eliminate errors."'
-    },
-    {
-      q: 'אם יחידת VGU אחת כושלת באוויר במטוס עם יתירות, איך תסביר לחניך מה קורה?',
-      opts: [
-        'המטוס מתרסק מיד בלי אפשרות תיקון.',
-        'מחשב הטיסה מזהה חריגה/תקלה ועובר אוטומטית למקור הגיבוי (כמו VGU שני או ערוץ אווירי/ניווט), כדי לשמור על שליטה.',
-        'המנועים נכבים כדי להגן על הג\'ירו.'
-      ],
-      ans: 1,
-      heExp: 'מעולה! יתירות (Redundancy) היא עקרון יסוד בכל מערכת בקרת טיסה של כטמ"מ.',
-      enAns: '"Thanks to redundancy, if the primary VGU fails or disagrees, the flight control computer switches to the backup attitude source to keep the aircraft stable."'
-    },
-    {
-      q: 'למה בשנים האחרונות עוברים מיחידת VGU מכנית ישנה ליחידות AHRS מודרניות?',
-      opts: [
-        'כי ליחידות AHRS אלקטרוניות אין חלקים מכניים מסתובבים שנשחקים, הן קלות יותר, ומספקות גם כיוון וגם קצבים.',
-        'כי VGU מכני לא יודע למדוד זווית גלגול.',
-        'כי AHRS לא צריך חשמל בכלל.'
+        'לדווח למחשב הטיסה שהמשטח באמת הגיע לזווית שהפקודה ביקשה (חוג סגור גם בתוך הסרוו).',
+        'למדוד גובה מעל פני הים.',
+        'למדוד טמפרטורת סוללה.'
       ],
       ans: 0,
-      heExp: 'תשובה של מדריכה עם ראייה תעשייתית רחבה!',
-      enAns: '"Modern AHRS units use solid-state sensors with no moving parts, offering lower weight, higher reliability, and full 3-axis data."'
+      heExp: 'נכון! בלי משוב מיקום מתוך הסרוו, המחשב לא יידע אם סרוו נתקע או לא סיים תנועה.',
+      enAns: '"The servo module includes internal position feedback so the FMS verifies that the surface actually reached the commanded angle."'
+    },
+    {
+      q: 'מה תפקיד Position (מיקום) בתוך ניהול הטיסה?',
+      opts: [
+        'לדעת איפה הכלי נמצא במרחב (קואורדינטה, גובה וכיוון) על ידי חיבור נתוני GPS, FMU ו-VGU.',
+        'להזיז פיזית את זנב ה-V.',
+        'לנתק את הזקיפה בג\'ירו.'
+      ],
+      ans: 0,
+      heExp: 'מצוין! Position היא תמונת המצב — לפני שאפשר להנחות את הכלי ליעד, חייבים לדעת איפה הוא נמצא.',
+      enAns: '"Position fuses GPS, heading, and attitude data so the system knows exactly where the aircraft is before Guidance directs where to go."'
+    },
+    {
+      q: 'במהלך פנייה מתואמת, מה מתנתק ב-VGU ומה ממשיך לפעול?',
+      opts: [
+        'רק מנגנון הזקיפה (תיקון המטוטלת) מתנתק זמנית; מדידת הזווית נשארת פעילה תמיד.',
+        'מדידת הזווית נעצרת עד סוף הפנייה.',
+        'הג\'ירו מכבה את הסביבון.'
+      ],
+      ans: 0,
+      heExp: 'זכרת מצוין! זה תמיד מרשים מראיינים.',
+      enAns: '"Only the pendulum erection mechanism cuts out during turns; attitude angle measurement stays continuously active."'
+    },
+    {
+      q: 'לפי עיקרון שפת הזרימה, מה קורה כשהגה הזנב יורד למטה?',
+      opts: [
+        'האוויר נדחף למטה, הזנב עולה למעלה, והאף יורד לצלילה.',
+        'האוויר נדחף למעלה והמטוס מטפס.',
+        'המטוס פונה ימינה.'
+      ],
+      ans: 0,
+      heExp: 'מושלם! הפעולה והתגובה בזנב הפוכה לתנועת האף — כשהזנב עולה, האף יורד.',
+      enAns: '"When the tail trailing edge moves down, airflow pushes the tail up, which pitches the nose down."'
     }
   ];
 
   let qIdx = 0, xp = 0, qAnswered = false;
-
   function renderQ() {
     qAnswered = false;
     const item = qaList[qIdx];
@@ -1026,7 +1275,7 @@
     const isRight = choice === item.ans;
     if (isRight) {
       xp += 100;
-      document.getElementById('xpBadge').textContent = `XP: ${xp} / 600`;
+      document.getElementById('xpBadge').textContent = `XP: ${xp} / 700`;
     }
     fb.innerHTML = `
       <strong style="color:${isRight ? '#22c55e' : '#ef4444'};">${isRight ? '✅ תשובה מדויקת! (+100 XP)' : '❌ כמעט — הנה ההסבר:'}</strong>
@@ -1042,37 +1291,21 @@
   }
   renderQ();
 
-  // ---------------- TAB 4: LESSON BLUEPRINTS ----------------
-  const blueprints = {
-    vgu: [
-      { t: '00:00–02:30', title: 'פתיחה ו"למה?"', desc: 'טיסה בתוך ענן בלילה: בלי שמיים וקרקע, המטוס חייב אוזן פנימית שתמדוד גלגול ועלרוד. הצגת המטרות של השיעור.' },
-      { t: '02:30–06:30', title: 'העיקרון הפיזיקלי', desc: 'איך סביבון מסתובב שומר על כיוון בחלל (Rigidity), ואיך החיישן קורא את הזווית בין הקופסה הנוטה לסביבון הישר.' },
-      { t: '06:30–12:00', title: 'זקיפה וניתוק זקיפה', desc: 'למה הג\'ירו נסחף לאט, איך מערכת הזקיפה מתקנת אותו, ואיך Erection Cut-Out מונע שגיאה בפניות ובתאוצות.' },
-      { t: '12:00–17:00', title: 'אינטגרציה, בדיקות ותקלה', desc: 'לאן ה-VGU מחובר (מחשב בקרת הטיסה), יתירות/בדיקות לפני טיסה, ומה עושים אם מתקבלת קריאת זווית שגויה.' },
-      { t: '17:00–20:00', title: 'סיכום ושאלת החניכים', desc: 'סיכום ב-3 משפטים קצרים + 2 שאלות הבנה למראיינים (למשל: "מה יקרה לזווית האופק בפנייה חדה אם מנגנון ה-Cut-Out תקול?").' }
-    ],
-    fc: [
-      { t: '00:00–02:30', title: 'פתיחה ו"למה?"', desc: 'איך כלי טיס בלי טייס בתא הטייס נשאר יציב ברוח ומבצע משימה? הכרת תפקיד מערכת בקרת הטיסה.' },
-      { t: '02:30–07:00', title: 'החוג הסגור (Closed Loop)', desc: 'שרטוט המעגל: חיישנים (כמו VGU וג\'ירו קצבים) ← מחשב טיסה ← סרוואים ← משטחי היגוי ← תנועת הכלי.' },
-      { t: '07:00–12:30', title: 'אווירודינמיקה וזנב V', desc: 'תפקיד המאזנות בגלגול, ואיך זנב V משלב עלרוד (תנועה משותפת) עם סבסוב (תנועה מנוגדת).' },
-      { t: '12:30–17:00', title: 'יתירות ומענה לתקלה', desc: 'מה קורה כשחיישן או ערוץ שליטה אחד נופל — איך המערכת עוברת לגיבוי ושומרת על בטיחות טיסה.' },
-      { t: '17:00–20:00', title: 'סיכום ושאלת החניכים', desc: 'סיכום החוג הסגור + שאלת בדיקה למראיינים ("אם נתקע משטח זנב ימין, אילו צירים יושפעו?").' }
-    ]
-  };
+  // ---------------- TAB 5: 20-MIN FLIGHT CONTROL LESSON ----------------
+  const fcBlueprint = [
+    { t: '00:00–02:30', title: 'פתיחה ו"למה?"', desc: 'איך כטמ"מ בלי טייס בפנים יודע איפה הוא נמצא, לאן לטוס ולא ליפול במשב רוח? הצגת מבנה השיעור.' },
+    { t: '02:30–06:30', title: 'מודול החיישנים (Sensor Module)', desc: 'הצגת החיישנים: VGU (גלגול ועלרוד), FMU (שדה מגנטי/כיוון), GPS (מיקום במפה), וקצבים/אוויר.' },
+    { t: '06:30–11:30', title: 'מחשב הטיסה (FMS) ושלוש הקומות', desc: 'הסבר נקי על ההבדל בין Position (איפה אני), Guidance (נתיב ליעד) ו-SAS (ייצוב מהיר לרוח).' },
+    { t: '11:30–16:00', title: 'מודול סרוו ואווירודינמיקה', desc: 'איך פקודה הופכת לתנועת משטח (עיקרון שפת הזרימה במאזנות ובזנב V), כולל משוב מיקום פנימי.' },
+    { t: '16:00–20:00', title: 'יתירות, תקלה ושאלות לחניכים', desc: 'מה קורה כשחיישן נופל (מעבר לגיבוי), סיכום המעגל הסגור, ו-2 שאלות הבנה למראיינים.' }
+  ];
 
-  function renderBlueprint(key, btn) {
-    if (btn) {
-      btn.parentElement.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-    document.getElementById('blueprintBox').innerHTML = blueprints[key].map(s => `
-      <div class="timeline-step">
-        <div class="t-badge">${s.t}</div>
-        <div><strong>${s.title}:</strong> ${s.desc}</div>
-      </div>
-    `).join('');
-  }
-  renderBlueprint('vgu');
+  document.getElementById('blueprintBox').innerHTML = fcBlueprint.map(s => `
+    <div class="timeline-step">
+      <div class="t-badge">${s.t}</div>
+      <div><strong>${s.title}:</strong> ${s.desc}</div>
+    </div>
+  `).join('');
 </script>
 </body>
 </html>
